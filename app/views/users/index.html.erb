@@ -1,17 +1,22 @@
 <p id="notice"><%= notice %></p>
 
+
 <h1>Listing Users</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Email</th>
+      <th>Username</th>
       <th>Password</th>
-      <th>About</th>
+      <th>Created</th>
       <th>Karma</th>
-      <th>Provider</th>
-      <th>Uid</th>
+      <th>About</th>
+      <th>Email</th>
+      <th>Showdead</th>
+      <th>Noprocrast</th>
+      <th>Maxvisit</th>
+      <th>Minaway</th>
+      <th>Delay</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,12 +25,16 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= user.name %></td>
-        <td><%= user.email %></td>
         <td><%= user.password %></td>
-        <td><%= user.about %></td>
+        <td><%= user.created %></td>
         <td><%= user.karma %></td>
-        <td><%= user.provider %></td>
-        <td><%= user.uid %></td>
+        <td><%= user.about %></td>
+        <td><%= user.email %></td>
+        <td><%= user.showdead %></td>
+        <td><%= user.noprocrast %></td>
+        <td><%= user.maxvisit %></td>
+        <td><%= user.minaway %></td>
+        <td><%= user.delay %></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -33,6 +42,11 @@
     <% end %>
   </tbody>
 </table>
+
+
+<h3>Login</h3>
+
+
 
 <br>
 

@@ -1,0 +1,18 @@
+<div>
+  <aside>
+    <section>
+      <h1>
+        <%= @user.name %>
+      </h1>
+    </section>
+  </aside>
+  <div>
+    <% if @user.contributions.any? %>
+      <h3>Contributions (<%= @user.contributions.count %>)</h3>
+      <ol>
+        <%= render @contributions %>
+      </ol>
+      <%= will_paginate @contributions %>
+    <% end %>
+  </div>
+</div>

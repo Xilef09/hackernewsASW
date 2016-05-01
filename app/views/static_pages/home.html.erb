@@ -14,6 +14,32 @@
         <div class="user">Victor</div>
     </div>
     
+    <div class="home-content">
+      <div class="contributions">
+          
+        <% @contributions.each.with_index(1) do |contribution, index| %> 
+      
+          <div class="item">
+            <span class="rank"><%= index %>.</span>
+            <div>
+            <div>
+                <span class="titulo"><%= link_to "#{contribution.titulo}", contribution%></span>
+                <span class="url"><a href="http://<%= contribution.url %>">(<%= contribution.url %>)</a></span>
+            </div>
+            <div class="bottom">
+                <span><%= contribution.puntos %> points,</span>
+                <span>by <%= link_to "#{getAuthor(contribution.user_id)}", "/users/#{contribution.user_id}", {style: "color: grey"}%></span>
+                <span><%= link_to "#{time_ago_in_words(contribution.created_at)} ago", contribution %> </span>
+                <span><%= link_to "#{contribution.comments.size + contribution.replies.size} comments", contribution %></span>
+            </div>
+            </div>
+          </div>
+        
+        <% end %>
+      
+      </div>
+      
+    </div>
     
     </div>
   </body>

@@ -1,39 +1,23 @@
-<p id="notice"><%= notice %></p>
+<table>
+  <tbody>
+    <tr>
+      <td>User</td>
+      <td> <%=@user.name %> </td>
+    </tr>
+    <tr>
+      <td>karma</td>
+      <td><%=@user.karma %></td>
+    </tr>
+    <tr>
+      <td>about</td>
+      <td><%=@user.about %></td>
+    </tr>
+    <tr>
+      <td> <%= link_to 'submissions', contributions_path(@user) %> </td>
+    </tr>
+    <tr>
+      <td> <%= link_to 'comments', users_path %> git</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
-
-<p>
-  <strong>About:</strong>
-  <%= @user.about %>
-</p>
-
-<p>
-  <strong>Karma:</strong>
-  <%= @user.karma %>
-</p>
-
-<p>
-  <strong>Provider:</strong>
-  <%= @user.provider %>
-</p>
-
-<p>
-  <strong>Uid:</strong>
-  <%= @user.uid %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>

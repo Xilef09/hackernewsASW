@@ -64,6 +64,8 @@ Rails.application.routes.draw do
   
   get 'contributions' => 'contributions#index'
   
+  get 'asks' => 'asks#index'
+  
   post '/replies' => 'replies#new'
   
   get '/auth/twitter/callback', to: 'sessions#create'

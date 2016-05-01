@@ -1,55 +1,79 @@
-  <span>
-    <%= @contribution.titulo %>
-  </span>
+
+<%= render 'static_pages/header' %>
+    <%= render 'static_pages/menu' %>
+<div class="page-content">
+  <div class="contributions">
+    <div class="item">
+      <div>
+        <div>
+          <span class="titulo">
+            <%= @contribution.titulo %>
+          </span>
+          
+          <span class="url">
+            <% if @contribution.url != "" %>
+            <a href="http://<%= @contribution.url %>">(<%= @contribution.url %>)</a>
+            <% end %>
+          </span>
+        </div>
+      
+        <div class="bottom">
+          <span>
+            <%= @contribution.puntos %>
+          </span>
+          
+          <span>
+            points by
+          </span>
+        
+          <span>
+             <%= link_to @contribution.user.name, @contribution.user %>
+          </span>
+          
+          <span>
+            <%= link_to "#{time_ago_in_words(@contribution.created_at)} ago", @contribution %>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
   
-  <span>
-    (<%= @contribution.url %>)
-  </span>
-  
-  <span>
-    <%= @contribution.puntos %>
-  </span>
+  <div>
+    <%= @contribution.text %>
+  </div>
   
   <br>
+  <br>
+  <br>
+  <%= render "comments/newComment" %>
   
-  <span>
-    points by
-  </span>
-
-  <span>
-     <%= link_to @contribution.user.name, @contribution.user %>
-  </span>
   
-  <span>
-    <%= link_to time_ago_in_words(@contribution.created_at), @contribution %>
-  </span>
-
-
-<h2>Add a comment:</h2>
-<%= render "comments/newComment" %>
-
-<%= link_to 'Edit', edit_contribution_path(@contribution) %> |
-<%= link_to 'Back', contributions_path %>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @contribution.comments.each do |comment| %>
-      <tr>
-        <br>
-        <td><%= comment.content %> </td>
-        <td><%= link_to 'Reply', comment %></td>
-      </tr>
-      <tr>
-      <% comment.replies.each do |reply| %>
-        <td><%= reply.content %></td> <!-- mejorar style -->
-      </tr>
-      <%end%>
-    <% end %>
-  </tbody>
-</table>
+  <%= link_to 'Edit', edit_contribution_path(@contribution) %> |
+  <%= link_to 'Back', contributions_path %>
+  
+  <div class="comentarios">
+      <% @contribution.comments.each do |comment| %>
+          <div class="top">
+            <span><%= comment.user.name %></span>
+            <span><%= time_ago_in_words( comment.created_at ) %> ago</span>
+          </div>
+          
+          <div><%= comment.content %> </div>
+          <%= link_to 'Reply', comment %>
+          <div class="replies">
+        <% comment.replies.each do |reply| %>
+          <div class="reply">
+            <div class="top">
+              <span><%= reply.user %></span>
+              <span><%= time_ago_in_words( reply.created_at ) %> ago</span>
+            </div>
+            <div class="reply-content">
+              <%= reply.content %> 
+            </div>
+          </div>
+        <%end%>
+        </div>
+      <% end %>
+    </div>
+</div>
+<%= render 'static_pages/footer' %>

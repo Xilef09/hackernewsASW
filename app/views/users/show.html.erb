@@ -1,23 +1,32 @@
-<table>
-  <tbody>
-    <tr>
-      <td>User</td>
-      <td> <%=@user.name %> </td>
-    </tr>
-    <tr>
-      <td>karma</td>
-      <td><%=@user.karma %></td>
-    </tr>
-    <tr>
-      <td>about</td>
-      <td><%=@user.about %></td>
-    </tr>
-    <tr>
-      <td> <%= link_to 'submissions', contributions_path(@user) %> </td>
-    </tr>
-    <tr>
-      <td> <%= link_to 'comments', users_path %> git</td>
-    </tr>
-  </tbody>
-</table>
+
+  <%= render 'static_pages/header' %>
+  <%= render 'static_pages/menu' %>
+  <div class="page-content">
+      <div class="user-wrapper">
+        <div class="flex-wrapper">
+          <div class="title">User:</div>
+          <div class="user-content"><%=@user.name %> </div>
+        </div>
+        <div class="flex-wrapper">
+          <div class="title">Created:</div>
+          <div class="user-content"><%= "#{time_ago_in_words(@user.created_at)} ago" %></div>
+        </div>
+        <div class="flex-wrapper">
+          <div class="title">Karma:</div>
+          <div class="user-content"><%=@user.karma %></div>
+        </div>
+        <div class="flex-wrapper">
+          <div class="title">About:</div>
+          <div class="user-content"><%=@user.about %></div>
+        </div>
+        <div style="font-weight: bold"> <%= link_to 'contributions', contributions_path(@user) %> </div>
+
+        <div style="font-weight: bold"> <%= link_to 'asks', asks_path(@user) %> </div> 
+        <div style="font-weight: bold"> <%= link_to 'comments', users_path %> </div>
+    </div>
+  </div>
+  
+  <%= render 'static_pages/footer' %>
+
+
 

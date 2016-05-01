@@ -12,19 +12,20 @@
   <% end %>
 
   <div class="field">
-    <%= f.hidden_field(:contribution_id, :value => 9) %>
-  </div>
-  
-   <div class="field">
-    <%= f.hidden_field(:user_id, :value => 5) %>
+    <%= f.label :content %><br>
+    <%= f.text_field :content %>
   </div>
   
   <div class="field">
-    <%= f.label :content %><br>
-    <%= f.text_field :content %>
+    <%= f.hidden_field(:contribution_id, :value => @contribution.id) %>
+  </div>
+  
+  <div class="field">
+     <%= f.hidden_field(:user_id, :value => current_user.id) %> <!-- CAMBIAR CUANDO TENGAMOS USUARIOS -->
   </div>
   
   <div class="actions">
     <%= f.submit %>
   </div>
+  
 <% end %>

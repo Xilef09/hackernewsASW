@@ -1,10 +1,10 @@
-<%= form_for(@reply) do |f| %>
-  <% if @reply.errors.any? %>
+<%= form_for(Reply.new) do |f| %>
+  <% if Reply.new.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@reply.errors.count, "error") %> prohibited this reply from being saved:</h2>
+      <h2><%= pluralize(Reply.new.errors.count, "error") %> prohibited this comment from being saved:</h2>
 
       <ul>
-      <% @reply.errors.full_messages.each do |message| %>
+      <% Reply.new.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -13,12 +13,21 @@
 
   <div class="field">
     <%= f.label :content %><br>
-    <%= f.text_area :content %>
+    <%= f.text_field :content %>
   </div>
+  
   <div class="field">
-    <%= f.label :puntos %><br>
-    <%= f.number_field :puntos %>
+    <%= f.hidden_field(:comment_id, :value => @comment.id) %>
   </div>
+  
+  <div class="field">
+    <%= f.hidden_field(:contribution_id, :value => @comment.contribution_id) %>
+  </div>
+  
+  <div class="field">
+     <%= f.hidden_field(:user_id, :value => 6) %> <!-- CAMBIAR CUANDO TENGAMOS USUARIOS -->
+  </div>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

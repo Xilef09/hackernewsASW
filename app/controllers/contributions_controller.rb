@@ -1,5 +1,40 @@
 class ContributionsController < ApplicationController
-  before_action :set_contribution, only: [:show, :edit, :update, :destroy]
+    before_action :set_contribution, only: [:show, :edit, :update, :destroy]
+
+  def upvote
+    if(current_user)
+      @contributions = Contribution.find(params[:id])
+      @contributions.liked_by current_user
+      @contributions.update(puntos: @contributions.votes_for.size)
+      redirect_to root_path
+    else # ve de l'api
+        @contributions = Contribution.find(params[:id])
+        @user = User.find(params[:user_id])
+      
+    if(@user.voted_for? @contributions)
+       render :json => {:status => "403", :error => "L'usuari ja ha votat aquesta contributio"}, status: :forbidden
+    else
+      @contributions.liked_by @user
+      @contributions.update(puntos: @contributions.votes_for.size)
+        
+        respond_to do |format|
+          format.json { render :show, status: :ok, location: @contributions }
+        end
+      end
+    end
+  end
+  
+  #def upvote 
+  #  @contributions = Contribution.find(params[:id])
+  #  @contributions.upvote_by current_user
+  #  redirect_to :back
+  #end
+  
+  def downvote
+    @contributions = Contribution.find(params[:id])
+    @contributions.downvote_by current_user
+    redirect_to :back
+  end
 
   # GET /contributions
   # GET /contributions.json
@@ -10,6 +45,7 @@ class ContributionsController < ApplicationController
   # GET /contributions/1
   # GET /contributions/1.json
   def show
+    @comment = Comment.new
   end
 
   # GET /contributions/new
@@ -28,8 +64,8 @@ class ContributionsController < ApplicationController
 
     respond_to do |format|
       if @contribution.save
-        format.html { redirect_to @contribution, notice: 'Contribution was successfully created.' }
-        format.json { render :show, status: :created, location: @contribution }
+        format.html { redirect_to "" }
+        format.json { render :index, status: :created, location: @contribution }
       else
         format.html { render :new }
         format.json { render json: @contribution.errors, status: :unprocessable_entity }
@@ -60,7 +96,7 @@ class ContributionsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_contribution

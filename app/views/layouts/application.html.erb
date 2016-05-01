@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Workspace</title>
+  <title>HackerNews</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -9,6 +9,34 @@
 <body>
 
 <%= yield %>
+  
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <%= link_to 'Hacker News', root_path, class: 'navbar-brand' %>
+    </div>
+    <div id="navbar">
+      <% if current_user %>
+        <ul class="nav navbar-nav pull-right">
+          <li><%= link_to 'Sign out', 'https://hackernews-asw-felixhb.c9users.io/sign_out', method: :delete %></li>
+        </ul>
+      <% else %>
+        <ul class="nav navbar-nav">
+          <li><%= link_to 'Sign in with Twitter', 'https://hackernews-asw-felixhb.c9users.io/auth/twitter' %></li>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+  </nav>
+  
+  
+  <% if current_user %>
+    <%= current_user.name%>
+  <% else %>
+    no hi ha ningu logejat
+  <% end %>
+  
 
 </body>
+
 </html>

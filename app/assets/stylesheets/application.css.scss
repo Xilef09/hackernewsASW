@@ -1,3 +1,19 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
 .page {
     margin: 10px auto;
     max-width: 85%;
@@ -26,7 +42,7 @@
     padding: 0 15px;
 }
 
-.home-content {
+.page-content {
     padding: 20px 15px;
 }
 
@@ -79,4 +95,37 @@ body a:before {
 body a:hover:before {
     width: 100%;
     
+}
+
+.field .label {
+    float: left;
+    min-width: 50px;
+}
+
+.field #comment_content {
+    width: 100%;
+    max-width: 500px;
+    height: 150px;
+}
+
+.comentarios {
+    font-size: 12px;
+}
+
+.comentarios .top {
+    font-size: 11px;
+    color: #7d7d7d;
+}
+
+.replies {
+    padding-left: 40px;
+    margin-bottom: 20px;
+}
+
+.flex-wrapper {
+    display: flex;
+}
+
+.flex-wrapper .title {
+    min-width: 100px;
 }

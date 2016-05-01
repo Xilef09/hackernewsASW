@@ -1,0 +1,82 @@
+.page {
+    margin: 10px auto;
+    max-width: 85%;
+    background: #F6F6EF;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    background: #FF6600;
+}
+
+.header-top h1 {
+    line-height: 15px;
+    font-size: 15px;
+    padding: 0 15px;
+}
+
+.header-top .links {
+    width: 70%;
+}
+
+.header-top .user { 
+    padding: 0 15px;
+}
+
+.home-content {
+    padding: 20px 15px;
+}
+
+.contributions .item .titulo {
+    color: #000;
+}
+
+.contributions .item {
+    display: flex;
+}
+
+.contributions .item .rank {
+    margin-right: 5px;
+}
+
+.contributions .item .url,
+.contributions .item .url a {
+    font-size: 10px;
+    color: #828282;
+}
+
+.contributions .item .bottom {
+    color: #828282;
+    font-size: 10px;
+}
+
+body a {
+    text-decoration: none;
+    transition: all 0.5s ease;
+    position: relative;
+    display: inline-block;
+}
+
+body a:hover {
+    color: #000;
+    background: initial;
+}
+
+body a:before {
+    content: "";
+    display: table;
+    height: 1px;
+    width: 0;
+    position: absolute;
+    bottom: 0;
+    background: #000;
+    transition: width 0.5s ease;
+}
+
+body a:hover:before {
+    width: 100%;
+    
+}

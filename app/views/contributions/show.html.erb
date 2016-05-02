@@ -55,7 +55,7 @@
           </div>
           
           <div><%= comment.content %> </div>
-          <%= link_to 'Reply', "" %>
+          <%= link_to 'Reply', comment %>
           <div class="replies">
         <% comment.replies.each do |reply| %>
           <div class="reply">

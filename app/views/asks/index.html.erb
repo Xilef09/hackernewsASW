@@ -5,25 +5,28 @@
   <div class="contributions">
   <% @contributions.each.with_index(1) do |contribution, index| %>
     <div class="item">
+      <div>
+          <span><%= index %>.&nbsp; </span>
+      </div>
+      <div>
         <span> <%= link_to like_contribution_path(contribution), method: :put do %>
                   <img src="https://news.ycombinator.com/grayarrow.gif"></img>
                  
                 <% end %>
                  &nbsp;
         </span>
-        <div>
-          <span><%= index %>.&nbsp; </span>
-        </div> 
-        <div>
-          <span class="titulo"><%= link_to "#{contribution.titulo}", contribution%></span>
+      </div>
+        
+      <div>
+        <span class="titulo"><%= link_to "#{contribution.titulo}", contribution%></span>
 
-          <div class="bottom">
-            <span><%= contribution.puntos %> points,</span>
-            <span>by <%= link_to "#{getAuthor(contribution.user_id)}", "/users/#{contribution.user_id}", {style: "color: grey"}%></span>
-            <span><%= link_to "#{time_ago_in_words(contribution.created_at)} ago", contribution %> </span>
-            <span><%= link_to "#{contribution.comments.size + contribution.replies.size} comments", contribution %></span>
-          </div>
+        <div class="bottom">
+          <span><%= contribution.puntos %> points,</span>
+          <span>by <%= link_to "#{getAuthor(contribution.user_id)}", "/users/#{contribution.user_id}", {style: "color: grey"}%></span>
+          <span><%= link_to "#{time_ago_in_words(contribution.created_at)} ago", contribution %> </span>
+          <span><%= link_to "#{contribution.comments.size + contribution.replies.size} comments", contribution %></span>
         </div>
+      </div>
     </div>
   <% end %>
   </div>

@@ -25,7 +25,7 @@
   </div>
   
   <div class="field">
-     <%= f.hidden_field(:user_id, :value => 6) %> <!-- CAMBIAR CUANDO TENGAMOS USUARIOS -->
+     <%= f.hidden_field(:user_id, :value => current_user.id) %> <!-- CAMBIAR CUANDO TENGAMOS USUARIOS -->
   </div>
   
   <div class="actions">

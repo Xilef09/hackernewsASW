@@ -12,21 +12,27 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :titulo %><br>
+    <div class="label">
+    <%= f.label :titulo %>
+    </div>
     <%= f.text_field :titulo %>
   </div>
 
   <div class="field">
-     <%= f.hidden_field(:user_id, :value => current_user.id) %>
+     <%= f.hidden_field( :user_id, :value => 1 ) %>
   </div>
   
   <div class="field">
-    <%= f.label :url %><br>
+    <div class="label">
+    <%= f.label :url %>
+    </div>
     <%= f.text_field :url %>
   </div>
   
   <div class="field">
-    <%= f.label :text %><br>
+    <div class="label">
+    <%= f.label :text %>
+    </div>
     <%= f.text_area :text %>
   </div>
   

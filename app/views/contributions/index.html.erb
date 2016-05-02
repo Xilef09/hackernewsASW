@@ -1,3 +1,22 @@
-<ol class="contributions">
-  <%= render @contributions %>
-</ol>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Home | Hacker News</title>
+  </head>
+    <%= render 'static_pages/header' %>
+    <%= render 'static_pages/menu' %>
+    
+    <div class="page-content">
+      <div class="contributions">
+          <ol>
+         <%= render @contributions %>
+          </ol
+        
+      
+      </div>
+      
+    </div>
+    <%= render 'static_pages/footer' %>
+  
+</html>
+

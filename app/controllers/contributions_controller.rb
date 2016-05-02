@@ -6,22 +6,8 @@ class ContributionsController < ApplicationController
       @contributions = Contribution.find(params[:id])
       @contributions.liked_by current_user
       @contributions.update(puntos: @contributions.votes_for.size)
-      redirect_to root_path
-    else # ve de l'api
-        @contributions = Contribution.find(params[:id])
-        @user = User.find(params[:user_id])
-      
-    if(@user.voted_for? @contributions)
-       render :json => {:status => "403", :error => "L'usuari ja ha votat aquesta contributio"}, status: :forbidden
-    else
-      @contributions.liked_by @user
-      @contributions.update(puntos: @contributions.votes_for.size)
-        
-        respond_to do |format|
-          format.json { render :show, status: :ok, location: @contributions }
-        end
-      end
     end
+    redirect_to root_path
   end
   
   #def upvote 

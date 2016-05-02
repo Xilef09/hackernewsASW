@@ -4,6 +4,18 @@
         <div class="links">
             <a href="/contributions/new">Submit</a>
             <a href="/asks">Asks</a>
+                <%= link_to 'Threats', contributions_path(@user) %>
         </div>
-        <div class="user">User name</div>
+        <div class="user">
+            <% if current_user %>
+                <a href="/users/<%= current_user.id %>"> 
+                <%= current_user.name %>
+                </a>
+                <%= link_to 'Sign out', '/sign_out', method: :delete %>
+            <% else %>
+            
+                <%= link_to 'Sign in with Twitter', '/auth/twitter' %>
+            
+            <% end %>
+        </div>
     </div>

@@ -2,21 +2,26 @@
   <%= render 'static_pages/menu' %>
 
 <div class="page-content">
-  
-  <h1>New reply for the comment:</h1>
-  
-  <div>
-    <aside>
-      <section>
-        <h1>
+
+  <div class="contributions"> 
+    <div class="item">
+      <div>
+        <div>
           <%= @comment.content %>
-        </h1>
-      </section>
-    </aside>
+        </div>
+        
+        <div class="bottom">
+          <span><%= @comment.puntos %> points,</span>
+            <span>by <%= link_to "#{getAuthor(@comment.user_id)}", "/users/#{@comment.user_id}", {style: "color: grey"}%></span>
+            <span><%= link_to "#{time_ago_in_words(@comment.created_at)} ago", @comment %> </span>
+          
+        </div>
+        <br></br>
+      </div>
+    </div>
   </div>
   
   <%= render "replies/form" %>
   
-  <%= link_to 'Back', comments_path %>
 </div>
   <%= render 'static_pages/footer' %>

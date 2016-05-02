@@ -46,36 +46,36 @@
   <br>
   <br>
   
-  <%= render "comments/newComment" %>
+  <% if current_user %>
+    <%= render "comments/newComment" %>
+  <% end %>
   
   <div class="comentarios">
       <% @contribution.comments.each do |comment| %>
           <div class="top">
+            <%= link_to like_comment_path(comment), method: :put do %>
+              <img src="https://news.ycombinator.com/grayarrow.gif"></img>
+            <% end %>
             <span><%= link_to "#{getAuthor(comment.user_id)}", "/users/#{comment.user_id}" %></span> 
             <span><%= time_ago_in_words( comment.created_at ) %> ago</span>
             <span> <%= comment.get_upvotes.size %> points,</span>
-                <%= link_to like_comment_path(comment), method: :put do %>
-                  Upvote
-                  <%= comment.get_upvotes.size %>
-                <% end %>
+                
           </div>
           
-          <div><%= comment.content %> </div>
-          <%= link_to 'Reply', comment %>
+          <div style="padding-left: 15px;"><%= comment.content %> </div>
+          <%= link_to 'Reply', comment, {style: "margin-left: 15px"}%>
           <div class="replies">
         <% comment.replies.each do |reply| %>
           <div class="reply">
             <div class="top">
+              <%= link_to like_reply_path(reply), method: :put do %>
+                <img src="https://news.ycombinator.com/grayarrow.gif"></img>
+              <% end %>
               <span><%= link_to "#{getAuthor(reply.user_id)}", "/users/#{reply.user_id}" %></span>
               <span><%= time_ago_in_words( reply.created_at ) %> ago</span>
               <span> <%= reply.get_upvotes.size %> points,</span>
-                
-                <%= link_to like_reply_path(reply), method: :put do %>
-                  Upvote
-                  <%= reply.get_upvotes.size %>
-                <% end %>
             </div>
-            <div class="reply-content">
+            <div class="reply-content" style="padding-left: 15px;">
               <%= reply.content %> 
             </div>
           </div>

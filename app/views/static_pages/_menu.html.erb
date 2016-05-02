@@ -1,10 +1,8 @@
-
     <div class="header-top">
         <a href="/" class="logo"><h1>Hacker News</h1></a>
         <div class="links">
             <a href="/contributions/new">Submit</a>
             <a href="/asks">Asks</a>
-            
             <% if current_user %>
                 <a href="/users/<%= current_user.id %>/threads"> Threads</a>
             <% end %>
@@ -16,9 +14,7 @@
                 </a>
                 <%= link_to 'Sign out', '/sign_out', method: :delete %>
             <% else %>
-            
                 <%= link_to 'Sign in with Twitter', '/auth/twitter' %>
-            
             <% end %>
         </div>
     </div>

@@ -51,8 +51,13 @@
   <div class="comentarios">
       <% @contribution.comments.each do |comment| %>
           <div class="top">
-            <span><%= comment.user.name %></span> <!-- Falta poner un link to no ? -->
+            <span><%= link_to "#{getAuthor(comment.user_id)}", "/users/#{comment.user_id}" %></span> 
             <span><%= time_ago_in_words( comment.created_at ) %> ago</span>
+            <span> <%= comment.get_upvotes.size %> points,</span>
+                <%= link_to like_comment_path(comment), method: :put do %>
+                  Upvote
+                  <%= comment.get_upvotes.size %>
+                <% end %>
           </div>
           
           <div><%= comment.content %> </div>
@@ -61,8 +66,14 @@
         <% comment.replies.each do |reply| %>
           <div class="reply">
             <div class="top">
-              <span><%= reply.user.name %></span>
+              <span><%= link_to "#{getAuthor(reply.user_id)}", "/users/#{reply.user_id}" %></span>
               <span><%= time_ago_in_words( reply.created_at ) %> ago</span>
+              <span> <%= reply.get_upvotes.size %> points,</span>
+                
+                <%= link_to like_reply_path(reply), method: :put do %>
+                  Upvote
+                  <%= reply.get_upvotes.size %>
+                <% end %>
             </div>
             <div class="reply-content">
               <%= reply.content %> 

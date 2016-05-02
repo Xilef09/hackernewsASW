@@ -7,7 +7,7 @@ class RepliesController < ApplicationController
       @replies.liked_by current_user
       @replies.update(puntos: @replies.votes_for.size)
     end
-    redirect_to "/submissions/#{@reply.submission_id}"
+    redirect_to "/contributions/#{@replies.contribution_id}"
   end 
   
   def downvote

@@ -4,8 +4,9 @@
         <div class="links">
             <a href="/contributions/new">Submit</a>
             <a href="/asks">Asks</a>
+            
             <% if current_user %>
-                <a href="/threads">Threads</a>
+                <a href="/users/<%= current_user.id %>/threads"> Threads</a>
             <% end %>
         </div>
         <div class="user">

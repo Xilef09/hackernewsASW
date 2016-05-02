@@ -1,47 +1,57 @@
   <%= render 'static_pages/header' %>
   <%= render 'static_pages/menu' %>
+  
   <div class="page-content">
+    <div class="contributions">
     <% @contributions.each.with_index(1) do |contribution, index| %>
-      <tr>
-        <td class="sub_top">
-          <span class="rank"><%= index%>.</span>
-          <span class="reply_link">
-          <% if current_user %>
-          <%= link_to like_contribution_path(contribution), method: :put do %>
-                  <img src="https://news.ycombinator.com/grayarrow.gif"></img>
-                 
-                <% end %>
 
-          <% else %>
-            <%= link_to image_tag("grayarrow.gif"), "/auth/twitter" %>
-          <% end %>
-          </span>
-          <span class="topic_title">
-          <%= link_to "#{contribution.titulo}", contribution%></span>
-          <% if contribution.url != ""  %>
-            (<span class="topic_url"><a href="http://<%= contribution.url %>"><%= contribution.url %></a></span>)
-          <% end %>
-        </td>
-      </tr>
-      <tr>
-        <td class="sub_bot">
-          <span style="color:grey"><%= contribution.votes_for.size %>
-          <% if contribution.votes_for.size < 2  %>
-            point by
-          <% else %>
-            points by
-          <% end %>
-          <%= link_to "#{getAuthor(contribution.user_id)}", "/users/#{contribution.user_id}", {style: "color: grey"}%>
-          <%= time_ago_in_words(contribution.created_at) %> ago | 
-          <% if contribution.comments.size == 0  %>
-            <%= link_to "discuss", contribution, {style: "color: grey"}%>
-          <% else %>
-            <%= link_to "#{contribution.comments.size + contribution.replies.size} comments", contribution, {style: "color: grey"}%>
-          <% end %>
-          </span>
-        </td>
-      </tr>
+          <div class="item">
+            
+            <div>
+              <span>
+              <% if current_user %>
+              <%= link_to like_contribution_path(contribution), method: :put do %>
+                      <img src="https://news.ycombinator.com/grayarrow.gif"></img>
+              <% end %>
+              <% else %>
+                <%= link_to image_tag("https://news.ycombinator.com/grayarrow.gif"), "/auth/twitter" %>
+              <% end %>
+              </span>
+            </div>
+            
+            <div>
+            &nbsp; <%= index %>. &nbsp;
+            </div>
+            <div>
+            
+              <span class="topic_title"><%= link_to "#{contribution.titulo}", contribution%></span>
+              <% if contribution.url != ""  %>
+                (<span class="topic_url"><a href="http://<%= contribution.url %>"><%= contribution.url %></a></span>)
+              <% end %>
+              
+              <div class="bottom">
+                <span style="color:grey"><%= contribution.votes_for.size %>
+                <% if contribution.votes_for.size < 2  %>
+                  point by
+                <% else %>
+                  points by
+                <% end %>
+                <%= link_to "#{getAuthor(contribution.user_id)}", "/users/#{contribution.user_id}" %>
+                <%= time_ago_in_words(contribution.created_at) %> ago | 
+                <% if contribution.comments.size == 0  %>
+                  <%= link_to "0 comments", contribution %>
+                <% else %>
+                  <%= link_to "#{contribution.comments.size + contribution.replies.size} comments", contribution %>
+                <% end %>
+                </span>
+                
+              </div>
+            </div>
+      </div>
     <% end %>
     </div>
+    
+    </div>
+    
 
   <%= render 'static_pages/footer' %>

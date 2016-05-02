@@ -1,0 +1,44 @@
+  <%= render 'static_pages/header' %>
+  <%= render 'static_pages/menu' %>
+  
+<div class="page-content">
+  
+
+  <p id="notice"><%= notice %></p>
+  <div class="contributions">
+    <% @replies.each.with_index(1) do |reply, index| %>
+      <div class="item">
+        <div>
+          <span><%= index%>.</span>&nbsp;
+        </div>
+        <div>
+          <span>
+          <% if current_user %>
+            <%= link_to image_tag("https://news.ycombinator.com/grayarrow.gif"), like_reply_path(reply), method: :put %>
+          <% else %>
+            <%= link_to image_tag("https://news.ycombinator.com/grayarrow.gif"), "/auth/twitter" %>
+          <% end %>
+          
+          </span>
+        </div>
+        <div>
+          <div>
+            &nbsp;<%= reply.content %>
+          </div>
+          
+          <div class="bottom">
+            <span>
+            <%= link_to "#{getAuthor(reply.user_id)}", "/users/#{reply.user_id}", {style: "color: grey"}%>
+            <%= time_ago_in_words(reply.created_at) %> ago | 
+            <%= link_to "parent", "/comments/#{reply.comment.id}", {style: "color: grey"}%>
+            | on: 
+            <%= link_to "#{reply.contribution.titulo}", "/contributions/#{reply.comment.contribution.id}", {style: "color: grey"}%>
+          </span>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+  <%= render 'static_pages/footer' %>

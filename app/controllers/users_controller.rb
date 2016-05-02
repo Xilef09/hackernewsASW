@@ -106,7 +106,6 @@ class UsersController < ApplicationController
     @user  = User.find(params[:id])
     @comments = Comment.where(user_id: @user.id).order(created_at: :desc)
     @replies = Reply.where(user_id: @user.id).order(created_at: :desc)
-    @threads = (@comments + @replies).order(created_at: :desc)
     render 'showthreads'
   end
   

@@ -64,7 +64,7 @@
         <% comment.replies.each do |reply| %>
           <div class="reply">
             <div class="top">
-              <span><%= reply.user %></span>
+              <span><%= reply.user.name %></span>
               <span><%= time_ago_in_words( reply.created_at ) %> ago</span>
             </div>
             <div class="reply-content">

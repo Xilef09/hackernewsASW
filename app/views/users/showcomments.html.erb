@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+<table>
+  <tbody>
+    <% @comments.each.with_index(1) do |comment, index| %>
+      <tr>
+        <td>
+          <span class="rank"><%= index%>.</span>
+          <span class="reply_link">
+          <% if current_user %>
+            <%= link_to image_tag("grayarrow.gif"), like_comment_path(comment), method: :put %>
+          <% else %>
+            <%= link_to image_tag("grayarrow.gif"), "https://my-hacker-news-project.herokuapp.com//auth/twitter" %>
+          <% end %>
+          </span>
+          <span style="color:grey">
+            <%= link_to "#{getAuthor(comment.user_id)}", "/users/#{comment.user_id}", {style: "color: grey"}%>
+            <%= time_ago_in_words(comment.created_at) %> ago | on: 
+            
+            <%= link_to "#{comment.submission.titol}", "/submissions/#{comment.submission.id}", {style: "color: grey"}%>
+          </span>
+            
+        </td>
+      </tr>
+      <tr>
+        <td class="c00">
+          <%= comment.content %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

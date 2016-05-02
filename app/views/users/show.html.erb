@@ -20,7 +20,7 @@
           <div class="title">About:</div>
           <div class="user-content"><%=@user.about %></div>
         </div>
-        <div style="font-weight: bold"> <%= link_to 'contributions', contributions_path(@user) %> </div>
+        <div style="font-weight: bold"> <%= link_to("Contributions", controller: "users", action:"contributions", :id => @user) %> </div>
 
         <div style="font-weight: bold"> <%= link_to 'asks', asks_path(@user) %> </div> 
         <div style="font-weight: bold"> <%= link_to 'comments', comments_path(@user) %> </div>

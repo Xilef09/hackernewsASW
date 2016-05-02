@@ -1,14 +1,21 @@
+  <%= render 'static_pages/header' %>
+  <%= render 'static_pages/menu' %>
 
-<div>
-  <aside>
-    <section>
-      <h1>
-        <%= @comment.content %>
-      </h1>
-    </section>
-  </aside>
+<div class="page-content">
+  <h1>New reply for the comment:</h1>
+  
+  <div>
+    <aside>
+      <section>
+        <h1>
+          <%= @comment.content %>
+        </h1>
+      </section>
+    </aside>
+  </div>
+  
+  <%= render "replies/form" %>
+  
+  <%= link_to 'Back', comments_path %>
 </div>
-
-<%= render "replies/form" %>
-
-<%= link_to 'Back', comments_path %>
+  <%= render 'static_pages/footer' %>

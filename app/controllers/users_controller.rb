@@ -84,7 +84,32 @@ class UsersController < ApplicationController
     end
   end
 
-
+  def contributions
+    @user  = User.find(params[:id])
+    @contributions = Contribution.where(user_id: @user.id).order(created_at: :desc)
+    render 'showcontribution'
+  end
+  
+  def comments
+    @user  = User.find(params[:id])
+    @comments = Comment.where(user_id: @user.id).order(created_at: :desc)
+    render 'showcomments'
+  end
+  
+  def replies
+    @user  = User.find(params[:id])
+    @replies = Reply.where(user_id: @user.id).order(created_at: :desc)
+    render 'showreplies'
+  end
+  
+  def threads
+    @user  = User.find(params[:id])
+    @comments = Comment.where(user_id: @user.id).order(created_at: :desc)
+    @replies = Reply.where(user_id: @user.id).order(created_at: :desc)
+    @threads = (@comments + @replies).order(created_at: :desc)
+    render 'showthreads'
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

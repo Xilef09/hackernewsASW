@@ -13,6 +13,11 @@
  *= require_tree .
  *= require_self
  */
+ 
+#reply_content {
+    width: 250px;
+    height: 100px;
+}
 
 .page {
     margin: 10px auto;
@@ -129,3 +134,4 @@ body a:hover:before {
 .flex-wrapper .title {
     min-width: 100px;
 }
+

@@ -47,19 +47,15 @@
   <br>
   <%= render "comments/newComment" %>
   
-  
-  <%= link_to 'Edit', edit_contribution_path(@contribution) %> |
-  <%= link_to 'Back', contributions_path %>
-  
   <div class="comentarios">
       <% @contribution.comments.each do |comment| %>
           <div class="top">
-            <span><%= comment.user.name %></span>
+            <span><%= comment.user.name %></span> <!-- Falta poner un link to no ? -->
             <span><%= time_ago_in_words( comment.created_at ) %> ago</span>
           </div>
           
           <div><%= comment.content %> </div>
-          <%= link_to 'Reply', comment %>
+          <%= link_to 'Reply', "" %>
           <div class="replies">
         <% comment.replies.each do |reply| %>
           <div class="reply">

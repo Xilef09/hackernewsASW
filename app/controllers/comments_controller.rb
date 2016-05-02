@@ -7,7 +7,8 @@ class CommentsController < ApplicationController
       @comments.liked_by current_user
       @comments.update(puntos: @comments.votes_for.size)
     end 
-    redirect_to "/submissions/#{@comment.submission_id}"
+    # redirect_to "/submissions/#{@comment.submission_id}"
+    redirect_to "#"
   end  
   
   def downvote

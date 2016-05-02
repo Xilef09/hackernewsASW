@@ -12,6 +12,12 @@
         <% @contributions.each.with_index(1) do |contribution, index| %>
       
           <div class="item">
+            <span> <%= link_to like_contribution_path(contribution), method: :put do %>
+                  <img src="https://news.ycombinator.com/grayarrow.gif"></img>
+                 
+                <% end %>
+                 &nbsp;
+            </span>
             <span class="rank"><%= index %>.</span>
             <div>
             <div>
@@ -25,12 +31,10 @@
               <% end %>
             </div>
             <div class="bottom">
+                
                 <span> <%= contribution.get_upvotes.size %> points,</span>
                 
-                <%= link_to like_contribution_path(contribution), method: :put do %>
-                  Upvote
-                  <%= contribution.get_upvotes.size %>
-                <% end %>
+               
 
                 
                 <span>by <%= link_to "#{getAuthor(contribution.user_id)}", "/users/#{contribution.user_id}", {style: "color: grey"}%></span>

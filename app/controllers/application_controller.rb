@@ -8,5 +8,12 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
   
+  def getAuthor(user_id)
+    @user = User.find(user_id)
+    author = @user.name
+    return author    
+  end
+  
+  helper_method :getAuthor
   helper_method :current_user
 end

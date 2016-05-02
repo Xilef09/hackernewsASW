@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   
   get 'static_pages/home'
   
+  get '/threads' => 'contributions#threads'
+  
     # You can have the root of your site routed with "root"
   root 'static_pages#home'
   

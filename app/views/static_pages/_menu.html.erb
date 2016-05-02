@@ -4,7 +4,9 @@
         <div class="links">
             <a href="/contributions/new">Submit</a>
             <a href="/asks">Asks</a>
-                <%= link_to 'Threats', contributions_path(@user) %>
+            <% if current_user %>
+                <a href="/threads">Threads</a>
+            <% end %>
         </div>
         <div class="user">
             <% if current_user %>

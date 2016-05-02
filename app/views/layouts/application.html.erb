@@ -9,34 +9,7 @@
 <body>
 
 <%= yield %>
-  <!--
-  <nav class="navbar navbar-inverse">
-  <div class="container">
-    <div class="navbar-header">
-      <%= link_to 'Hacker News', root_path, class: 'navbar-brand' %>
-    </div>
-    <div id="navbar">
-      <% if current_user %>
-        <ul class="nav navbar-nav pull-right">
-          <li><%= link_to 'Sign out', 'https://hackernewsasw2016.herokuapp.com/sign_out', method: :delete %></li>
-        </ul>
-      <% else %>
-        <ul class="nav navbar-nav">
-          <li><%= link_to 'Sign in with Twitter', 'https://hackernewsasw2016.herokuapp.com/auth/twitter' %></li>
-        </ul>
-      <% end %>
-    </div>
-  </div>
-  </nav>
-  
-  
-  <% if current_user %>
-    <%= current_user.name%>
-  <% else %>
-    no hi ha ningu logejat
-  <% end %>
-  
--->
+
 </body>
 
 </html>

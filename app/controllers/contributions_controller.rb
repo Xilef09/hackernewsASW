@@ -25,7 +25,13 @@ class ContributionsController < ApplicationController
   # GET /contributions
   # GET /contributions.json
   def index
-    @contributions = Contribution.all
+    @contributions =  Contribution.order("created_at desc").where("url<>'' AND url<>' '  AND url is not null") 
+  end
+  
+  # GET /contributions/users/1
+  # GET /contributions/users/1.json
+  def threads
+    @threads = Contribution.where("user_id=?",params[:id]).all.order("created_at desc")
   end
 
   # GET /contributions/1

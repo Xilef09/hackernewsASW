@@ -2,8 +2,8 @@ class RepliesController < ApplicationController
   before_action :set_reply, only: [:show, :edit, :update, :destroy]
 
   def upvote
+    @replies = Reply.find(params[:id])
     if(current_user)
-      @replies = Reply.find(params[:id])
       @replies.liked_by current_user
       @replies.update(puntos: @replies.votes_for.size)
     end

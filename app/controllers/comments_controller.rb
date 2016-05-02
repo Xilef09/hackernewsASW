@@ -2,8 +2,8 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   
   def upvote
+    @comments = Comment.find(params[:id])
     if(current_user)
-      @comments = Comment.find(params[:id])
       @comments.liked_by current_user
       @comments.update(puntos: @comments.votes_for.size)
     end 

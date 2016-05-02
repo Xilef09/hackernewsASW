@@ -43,12 +43,14 @@
   </div>
   
   <br>
-  <br>
-  <br>
-  
-  <% if current_user %>
+
+  <% if (current_user) %>
     <%= render "comments/newComment" %>
+  <% else %>
+    <b>If you want to comment on this contribution, please <%= link_to 'sign in', '/auth/twitter' %></b>
   <% end %>
+  <br>
+  <br>
   
   <div class="comentarios">
       <% @contribution.comments.each do |comment| %>
@@ -63,7 +65,12 @@
           </div>
           
           <div style="padding-left: 15px;"><%= comment.content %> </div>
-          <%= link_to 'Reply', comment, {style: "margin-left: 15px"}%>
+          <% if (current_user) %>
+            <%= link_to 'Reply', comment, {style: "margin-left: 15px"} %>
+          <% else %>
+            <%= link_to 'Reply', '/auth/twitter' %>
+          <% end %>
+          
           <div class="replies">
         <% comment.replies.each do |reply| %>
           <div class="reply">

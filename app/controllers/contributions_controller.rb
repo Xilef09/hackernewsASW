@@ -2,8 +2,9 @@ class ContributionsController < ApplicationController
     before_action :set_contribution, only: [:show, :edit, :update, :destroy]
 
   def upvote
+          @contributions = Contribution.find(params[:id])
+
     if(current_user)
-      @contributions = Contribution.find(params[:id])
       @contributions.liked_by current_user
       @contributions.update(puntos: @contributions.votes_for.size)
     end

@@ -102,6 +102,12 @@ class UsersController < ApplicationController
     render 'showreplies'
   end
   
+  def edit
+    @user  = User.find(params[:id])
+    render 'edit'
+    
+  end
+  
   def threads
     @user  = User.find(params[:id])
     @comments = Comment.where(user_id: @user.id).order(created_at: :desc)

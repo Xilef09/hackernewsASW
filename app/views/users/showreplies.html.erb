@@ -9,9 +9,6 @@
     <% @replies.each.with_index(1) do |reply, index| %>
       <div class="item">
         <div>
-          <span><%= index%>.</span>&nbsp;
-        </div>
-        <div>
           <span>
           <% if current_user %>
             <%= link_to image_tag("https://news.ycombinator.com/grayarrow.gif"), like_reply_path(reply), method: :put %>
@@ -20,6 +17,10 @@
           <% end %>
           
           </span>
+        </div>
+        <div>
+          <span><%= index%>.</span>&nbsp;
+          
         </div>
         <div>
           <div>

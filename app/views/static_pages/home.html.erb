@@ -12,13 +12,14 @@
         <% @contributions.each.with_index(1) do |contribution, index| %>
       
           <div class="item">
+            <span class="rank"><%= index %>.</span>&nbsp;
             <span> <%= link_to like_contribution_path(contribution), method: :put do %>
                   <img src="https://news.ycombinator.com/grayarrow.gif"></img>
                  
                 <% end %>
-                 &nbsp;
+                 
             </span>
-            <span class="rank"><%= index %>.</span>
+            &nbsp;
             <div>
             <div>
               <% if (contribution.url != "" ) then %>

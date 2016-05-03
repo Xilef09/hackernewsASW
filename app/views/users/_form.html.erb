@@ -1,6 +1,6 @@
   <%= render 'static_pages/header' %>
   <%= render 'static_pages/menu' %>
-
+<div class="page-content">
 <%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -26,3 +26,6 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+</div>
+<%= render 'static_pages/footer' %>

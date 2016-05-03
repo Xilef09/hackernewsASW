@@ -28,7 +28,9 @@
         <div style="font-weight: bold"> <%= link_to("Comments", controller: "users", action:"comments", :id => @user) %> </div>
         <div style="font-weight: bold"> <%= link_to("Replies", controller: "users", action:"replies", :id => @user) %> </div>
         <br>
+        <% if (current_user && current_user.name==@user.name)%>
         <div style="font-weight: bold"> <%= link_to("Edit", controller: "users", action:"edit", :id => @user) %>
+        <% end %>
     </div>
   </div>
   

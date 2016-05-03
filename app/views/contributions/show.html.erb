@@ -60,7 +60,7 @@
             <% end %>
             <span><%= link_to "#{getAuthor(comment.user_id)}", "/users/#{comment.user_id}" %></span> 
             <span><%= time_ago_in_words( comment.created_at ) %> ago</span>
-            <span> <%= comment.get_upvotes.size %> points,</span>
+            <span> <%= comment.get_upvotes.size %> points</span>
                 
           </div>
           
@@ -80,7 +80,7 @@
               <% end %>
               <span><%= link_to "#{getAuthor(reply.user_id)}", "/users/#{reply.user_id}" %></span>
               <span><%= time_ago_in_words( reply.created_at ) %> ago</span>
-              <span> <%= reply.get_upvotes.size %> points,</span>
+              <span> <%= reply.get_upvotes.size %> points</span>
             </div>
             <div class="reply-content" style="padding-left: 15px;">
               <%= reply.content %> 

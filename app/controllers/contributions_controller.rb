@@ -39,7 +39,6 @@ class ContributionsController < ApplicationController
   # GET /contributions/1.json
   def show
     @comment = Comment.new
-    @contribution = Contribution.all
   end
 
   # GET /contributions/new

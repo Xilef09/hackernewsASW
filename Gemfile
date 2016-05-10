@@ -10,6 +10,7 @@ gem 'jbuilder',     '2.2.3'
 gem 'sdoc',         '0.4.0', group: :doc
 gem 'omniauth-twitter'
 gem 'acts_as_votable', '~> 0.10.0'
+gem 'rack-cors', '~> 0.3.1'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

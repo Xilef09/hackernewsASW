@@ -16,9 +16,10 @@ class User < ActiveRecord::Base
       )
   end
   
-  def getToken( emailToCode ) 
+  def getToken( idToCode ) 
+    
     require "base64"
-    token  = Base64.encode64(emailToCode)
+    token  = Base64.encode64("%+d" % idToCode)
     return token
   end 
    

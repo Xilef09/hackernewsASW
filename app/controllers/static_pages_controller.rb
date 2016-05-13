@@ -17,4 +17,6 @@ class StaticPagesController < ApplicationController
     author = @user.name
     return author    
   end
+  
+  
 end

@@ -19,8 +19,14 @@ class User < ActiveRecord::Base
   def self.getToken() 
     require "base64"
     token  = Base64.encode64(self.id)
-    decodedToken = Base64.decode64(enc)
+    return token
   end 
+  
+  def self.decodeToken ()
+      require "base64"
+      decodedToken = Base64.decode64(enc)
+      return decodedToken
+  end
 
    
 end

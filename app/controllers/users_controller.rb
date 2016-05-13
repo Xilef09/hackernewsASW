@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @contributions = @user.contributions.paginate(page: params[:page])
   end
   
-   def getToken() 
+   def getToken 
     require "base64"
     token  = Base64.encode64(@user.id)
     return token

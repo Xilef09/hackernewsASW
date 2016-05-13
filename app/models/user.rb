@@ -15,18 +15,5 @@ class User < ActiveRecord::Base
       email: auth['info']['email']
       )
   end
-  
-  def self.getToken() 
-    require "base64"
-    token  = Base64.encode64(self.id)
-    return token
-  end 
-  
-  def self.decodeToken ()
-      require "base64"
-      decodedToken = Base64.decode64(enc)
-      return decodedToken
-  end
-
    
 end

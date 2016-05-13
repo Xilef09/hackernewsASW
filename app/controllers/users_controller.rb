@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :contributions]
+  
+  helper_method :getToken, :decodedToken
 
   # GET /users
   # GET /users.json
@@ -18,6 +20,18 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @contributions = @user.contributions.paginate(page: params[:page])
   end
+  
+   def getToken() 
+    require "base64"
+    token  = Base64.encode64(@user.id)
+    return token
+  end 
+  
+  #def decodeToken ()
+   #   require "base64"
+    #  decodedToken = Base64.decode64(@user)
+   #   return decodedToken
+  #end
 
   # GET /login
   def new

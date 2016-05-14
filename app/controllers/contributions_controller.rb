@@ -74,13 +74,21 @@ class ContributionsController < ApplicationController
         end
       end
     else
-        myId = decodeToken( params[:user_id] )
-        params[:contribution][:user_id] = myId;
-        params[:contribution][:puntos] = 0;
-        @contribution = Contribution.new(contribution_params)
+      myId = decodeToken( params[:user_id] )
+      params[:contribution][:user_id] = myId;
+      params[:contribution][:puntos] = 0;
+      @contribution = Contribution.new(contribution_params)
+      respond_to do |format|
+        if @contribution.save
+          format.html { redirect_to "" }
+          format.json { render :index, status: :created, location: @contribution }
+        else
+          format.html { render :new }
+          format.json { render json: @contribution.errors, status: :unprocessable_entity }
+        end
+      end  
     end
   end
-
 
   # PATCH/PUT /contributions/1
   # PATCH/PUT /contributions/1.json

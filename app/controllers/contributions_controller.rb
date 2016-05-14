@@ -61,7 +61,7 @@ class ContributionsController < ApplicationController
   # POST /contributions
   # POST /contributions.json
   def create
-    if ( current_user ) 
+    if (params[:contribution][:url] == '' || params[:contribution][:content] == '')
       params[:contribution][:puntos] = 0;
       @contribution = Contribution.new(contribution_params)
       respond_to do |format|
@@ -83,7 +83,7 @@ class ContributionsController < ApplicationController
       end
       
     else 
-      render :json => {:status => "405", :error => "Bad Request"}, status: :bad_request
+      render :json => {:status => "405", :error => "Empty id"}, status: :bad_request
     
     end
   end

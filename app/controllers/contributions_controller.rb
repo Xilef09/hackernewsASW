@@ -62,7 +62,6 @@ class ContributionsController < ApplicationController
   # POST /contributions.json
   def create
     if (params[:contribution][:url] == '' || (params[:contribution][:text] == '')  
-      params[:contribution][:puntos] = 0;
       @contribution = Contribution.new(contribution_params)
       respond_to do |format|
         if @contribution.save
@@ -73,20 +72,6 @@ class ContributionsController < ApplicationController
           format.json { render json: @contribution.errors, status: :unprocessable_entity }
         end
       end
-    else
-      myId = decodeToken( params[:user_id] )
-      params[:contribution][:user_id] = myId;
-      params[:contribution][:puntos] = 0;
-      @contribution = Contribution.new(contribution_params)
-      respond_to do |format|
-        if @contribution.save
-          format.html { redirect_to "" }
-          format.json { render :index, status: :created, location: @contribution }
-        else
-          format.html { render :new }
-          format.json { render json: @contribution.errors, status: :unprocessable_entity }
-        end
-      end  
     end
   end
 

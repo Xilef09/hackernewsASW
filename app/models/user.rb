@@ -22,5 +22,6 @@ class User < ActiveRecord::Base
     token  = Base64.encode64("%d" % idToCode)
     return token
   end 
+  
    
 end

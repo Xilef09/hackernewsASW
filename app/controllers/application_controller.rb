@@ -14,6 +14,13 @@ class ApplicationController < ActionController::Base
     return author    
   end
   
+  def decodeToken ( myToken )
+    require "base64"
+    id  = Base64.decode64(myToken)
+    return id.to_i
+  end 
+  
+  helper_method :decodeToken
   helper_method :getAuthor
   helper_method :current_user
 end

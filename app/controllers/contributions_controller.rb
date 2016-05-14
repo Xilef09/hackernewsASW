@@ -62,16 +62,17 @@ class ContributionsController < ApplicationController
   # POST /contributions.json
   def create
       if (params[:contribution][:url] == '' || params[:contribution][:text] == '')
-      @contribution = Contribution.new(contribution_params)
-      respond_to do |format|
-        if @contribution.save
-          format.html { redirect_to "" }
-          format.json { render :index, status: :created, location: @contribution }
-        else
-          format.html { render :new }
-          format.json { render json: @contribution.errors, status: :unprocessable_entity }
+        @contribution = Contribution.new(contribution_params)
+        respond_to do |format|
+          if @contribution.save
+            format.html { redirect_to "" }
+            format.json { render :index, status: :created, location: @contribution }
+          else
+            format.html { render :new }
+            format.json { render json: @contribution.errors, status: :unprocessable_entity }
+          end
         end
-      end
+      end  
   end
 
   # PATCH/PUT /contributions/1

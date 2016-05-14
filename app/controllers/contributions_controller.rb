@@ -61,7 +61,7 @@ class ContributionsController < ApplicationController
   # POST /contributions
   # POST /contributions.json
   def create
-    if (params[:contribution][:url] == '' || params[:contribution][:content] == '')
+    if (params[:contribution][:url] == '' || (params[:contribution][:text] == '')  
       params[:contribution][:puntos] = 0;
       @contribution = Contribution.new(contribution_params)
       respond_to do |format|
@@ -73,20 +73,14 @@ class ContributionsController < ApplicationController
           format.json { render json: @contribution.errors, status: :unprocessable_entity }
         end
       end
-    elsif( params[:user_id] != nil  ) 
-      if ( params[:titulo] != nil && params[:url] != nil)
+    else
         myId = decodeToken( params[:user_id] )
-        params[:contribution][:user_id] = myId
-        params[:contribution][:titulo] = params[:titulo];
+        params[:contribution][:user_id] = myId;
         params[:contribution][:puntos] = 0;
         @contribution = Contribution.new(contribution_params)
-      end
-      
-    else 
-      render :json => {:status => "405", :error => "Empty id"}, status: :bad_request
-    
     end
   end
+
 
   # PATCH/PUT /contributions/1
   # PATCH/PUT /contributions/1.json

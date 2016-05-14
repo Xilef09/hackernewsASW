@@ -72,7 +72,6 @@ class ContributionsController < ApplicationController
           format.json { render json: @contribution.errors, status: :unprocessable_entity }
         end
       end
-    end
   end
 
   # PATCH/PUT /contributions/1

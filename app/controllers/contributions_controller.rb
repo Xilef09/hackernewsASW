@@ -26,7 +26,15 @@ class ContributionsController < ApplicationController
   # GET /contributions
   # GET /contributions.json
   def index
-    @contributions =  Contribution.order("created_at desc").where("url<>'' AND url<>' '  AND url is not null") 
+    if params[:contribution_type] == "show"
+      @contributions = Contribution.where.not(url: '').order(created_at: :desc)
+    elsif params[:contribution_type] == "ask"
+      @contributions  = Contribution.where.not(content: '').order(created_at: :desc)
+    elsif params[:contribution_type] == nil || params[:contribution_type] == ''
+      @contributions  = Contribution.all.order(created_at: :desc)
+    else
+     render :json => {:status => "400", :error => "Bad Request"}, status: :bad_request
+    end
   end
   
   # GET /contributions/users/1

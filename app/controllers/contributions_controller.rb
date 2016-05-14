@@ -61,6 +61,7 @@ class ContributionsController < ApplicationController
   # POST /contributions
   # POST /contributions.json
   def create
+      if (params[:contribution][:url] == '' || params[:contribution][:text] == '')
       @contribution = Contribution.new(contribution_params)
       respond_to do |format|
         if @contribution.save

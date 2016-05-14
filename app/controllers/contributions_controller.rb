@@ -72,6 +72,19 @@ class ContributionsController < ApplicationController
             format.json { render json: @contribution.errors, status: :unprocessable_entity }
           end
         end
+      else
+        params[:contribution][user_id] = decodeToken(params[:contribution][user_id])
+        params[:contribution][:puntos] = 0;
+        @contribution = Contribution.new(contribution_params)
+        respond_to do |format|
+          if @contribution.save
+            format.html { redirect_to "" }
+            format.json { render :index, status: :created, location: @contribution }
+          else
+            format.html { render :new }
+            format.json { render json: @contribution.errors, status: :unprocessable_entity }
+          end
+        end
       end  
   end
 

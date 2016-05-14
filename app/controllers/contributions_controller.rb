@@ -29,7 +29,7 @@ class ContributionsController < ApplicationController
     if params[:contribution_type] == "show"
       @contributions = Contribution.where.not(url: '').order(created_at: :desc)
     elsif params[:contribution_type] == "ask"
-      @contributions  = Contribution.where.not(content: '').order(created_at: :desc)
+      @contributions  = Contribution.where.not(text: '').order(created_at: :desc)
     elsif params[:contribution_type] == nil || params[:contribution_type] == ''
       @contributions  = Contribution.all.order(created_at: :desc)
     else

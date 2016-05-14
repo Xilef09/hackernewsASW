@@ -61,6 +61,7 @@ class ContributionsController < ApplicationController
   # POST /contributions
   # POST /contributions.json
   def create
+    params[:contribution][:puntos] = 0;
     @contribution = Contribution.new(contribution_params)
 
     respond_to do |format|

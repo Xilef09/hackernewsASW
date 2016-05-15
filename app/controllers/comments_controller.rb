@@ -37,8 +37,8 @@ class CommentsController < ApplicationController
   def index
     if params[:contribution_id] == nil
       @comments = Comment.all
-    elsif params[:contribution_id] != nil
-      @contributions = Comment.where(contribution_id: params[:contribution_id])
+    else
+      @contributions = Comment.where(contribution_id: params[:contribution_id] )
     end
       
   end

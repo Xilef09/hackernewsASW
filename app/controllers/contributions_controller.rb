@@ -2,13 +2,15 @@ class ContributionsController < ApplicationController
     before_action :set_contribution, only: [:show, :edit, :update, :destroy]
 
   def upvote
-    @contributions = Contribution.find(params[:id])
+    
 
     if(current_user)
+      @contributions = Contribution.find(params[:id])
       @contributions.liked_by current_user
       @contributions.update(puntos: @contributions.votes_for.size)
       redirect_to root_path
     else 
+      @contributions = Contribution.find(params[:id])
       myId = decodeToken(params[:user_id])
       @user =  User.find(myId)
       if(@user.voted_for? @contributions)

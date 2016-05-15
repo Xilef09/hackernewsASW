@@ -10,7 +10,7 @@ class ContributionsController < ApplicationController
       @contributions.update(puntos: @contributions.votes_for.size)
       redirect_to root_path
     else 
-      @contributions = Contribution.find(params[:contribution_id])
+      @contributions = Contribution.find(params[:id])
       myId = decodeToken(params[:user_id])
       @user =  User.find(myId)
       if(@user.voted_for? @contributions)

@@ -19,12 +19,10 @@ class ContributionsController < ApplicationController
         @contributions.liked_by @user
         @contributions.update(puntos: @contributions.votes_for.size)
         
-        respond_to do |format|
           render :json => {status => "200", :id => params[:id], :text => @contributions.text, 
           :url => @contributions.url , :titulo => @contributions.titulo, :user_id => @contributions.user_id, 
           :created_at => @contributions.created_at, :puntos => @contributions.puntos }
           #format.json { render :show, status: :ok, location: @contributions }
-        end
       end
     end
     

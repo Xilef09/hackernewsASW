@@ -21,6 +21,7 @@ class RepliesController < ApplicationController
           render :json => {status => "200", :id => params[:id], :content => @replies.content, 
           :puntos => @replies.puntos ,:contribution_id => @replies.contribution_id , :user_id => @replies.user_id, :comment_id => @replies.comment_id,
           :created_at => @replies.created_at }
+      end
     end
     
   end 

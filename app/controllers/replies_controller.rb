@@ -36,7 +36,7 @@ class RepliesController < ApplicationController
   # GET /replies.json
   def index
     if (params[:comment_id] == nil )
-      @replies = Reply.first
+      @replies = Reply.all
     else 
 
     end

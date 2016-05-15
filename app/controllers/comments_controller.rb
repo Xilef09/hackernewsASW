@@ -20,9 +20,9 @@ class CommentsController < ApplicationController
   # GET /comments.json
   def index
     if params[:contribution_id] == nil
-    @comments = Comment.all
+      @comments = Comment.all
     elsif params[:contribution_id] != nil
-      @commnets = Commnet.all
+      @commnets = Comment.all
     end
       
   end

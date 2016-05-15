@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
     if params[:contribution_id] == nil
       @comments = Comment.all
     elsif params[:contribution_id] != nil
-      @commnets = Comment.all
+      @commnets = Comment.last
     end
       
   end

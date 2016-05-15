@@ -38,7 +38,7 @@ class RepliesController < ApplicationController
     if (params[:comment_id] == nil )
       @replies = Reply.all
     else 
-
+      @replies = Reply.where(comment_id: params[:comment_id])
     end
   end
 

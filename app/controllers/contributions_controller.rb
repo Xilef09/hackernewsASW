@@ -79,7 +79,7 @@ class ContributionsController < ApplicationController
         respond_to do |format|
           if @contribution.save
             format.html { redirect_to "" }
-            format.json { render :index, status: :created, location: @contribution }
+            format.json { render :show, status: :created, location: @contribution }
           else
             format.html { render :new }
             format.json { render json: @contribution.errors, status: :unprocessable_entity }

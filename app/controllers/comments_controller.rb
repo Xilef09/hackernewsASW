@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
         @comments.update(puntos: @comments.votes_for.size)
         
           render :json => {status => "200", :id => params[:id], :text => @comments.text, 
-          :url => @comments.url , :titulo => @comments.titulo, :user_id => @contributions.user_id, 
+          :url => @comments.url , :titulo => @comments.titulo, :user_id => @comments.user_id, 
           :created_at => @comments.created_at, :puntos => @comments.puntos }
           #format.json { render :show, status: :ok, location: @contributions }
       end

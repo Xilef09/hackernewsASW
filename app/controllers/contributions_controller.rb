@@ -61,7 +61,7 @@ class ContributionsController < ApplicationController
   # POST /contributions
   # POST /contributions.json
   def create
-      if (params[:contribution][:url] == '' || params[:contribution][:text] == '')
+      if (current_user)
         @contribution = Contribution.new(contribution_params)
         respond_to do |format|
           if @contribution.save
@@ -73,7 +73,7 @@ class ContributionsController < ApplicationController
           end
         end
       else
-        params[:contribution][user_id] = decodeToken(params[:contribution][user_id])
+        params[:contribution][:user_id] = decodeToken(params[:user_id])
         params[:contribution][:puntos] = 0;
         @contribution = Contribution.new(contribution_params)
         respond_to do |format|

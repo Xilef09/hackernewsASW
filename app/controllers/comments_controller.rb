@@ -2,12 +2,29 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   
   def upvote
-    @comments = Comment.find(params[:id])
+  
     if(current_user)
+      @comments = Comment.find(params[:id])
       @comments.liked_by current_user
       @comments.update(puntos: @comments.votes_for.size)
+      redirect_to "/contributions/#{@comments.contribution_id}"
+    else 
+      @comments = Comment.find(params[:id])
+      myId = decodeToken(params[:user_token])
+      @user =  User.find(myId)
+      if(@user.voted_for? @comments)
+         render :json => {:status => "403", :error => "El usuario ya ha votado este comment"}, status: :forbidden
+      else 
+        @comments.liked_by @user
+        @comments.update(puntos: @comments.votes_for.size)
+        
+          render :json => {status => "200", :id => params[:id], :text => @comments.text, 
+          :url => @comments.url , :titulo => @comments.titulo, :user_id => @contributions.user_id, 
+          :created_at => @comments.created_at, :puntos => @comments.puntos }
+          #format.json { render :show, status: :ok, location: @contributions }
+      end
     end 
-    redirect_to "/contributions/#{@comments.contribution_id}"
+    
   end  
   
   def downvote

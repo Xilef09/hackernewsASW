@@ -2,8 +2,7 @@ class ContributionsController < ApplicationController
     before_action :set_contribution, only: [:show, :edit, :update, :destroy]
 
   def upvote
-    
-
+  
     if(current_user)
       @contributions = Contribution.find(params[:id])
       @contributions.liked_by current_user
@@ -11,7 +10,7 @@ class ContributionsController < ApplicationController
       redirect_to root_path
     else 
       @contributions = Contribution.find(params[:id])
-      myId = decodeToken(params[:user_id])
+      myId = decodeToken(params[:user_token])
       @user =  User.find(myId)
       if(@user.voted_for? @contributions)
          render :json => {:status => "403", :error => "El usuario ya ha votado esta contribucion"}, status: :forbidden
@@ -90,7 +89,7 @@ class ContributionsController < ApplicationController
           end
         end
       else
-        params[:contribution][:user_id] = decodeToken(params[:user_id])
+        params[:contribution][:user_id] = decodeToken(params[:user_token])
         params[:contribution][:puntos] = 0;
         @contribution = Contribution.new(contribution_params)
         respond_to do |format|

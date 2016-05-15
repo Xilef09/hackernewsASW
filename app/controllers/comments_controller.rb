@@ -21,7 +21,6 @@ class CommentsController < ApplicationController
           render :json => {status => "200", :id => params[:id], :content => @comments.content, 
           :puntos => @comments.puntos ,:contribution_id => @comments.contribution_id , :user_id => @comments.user_id, 
           :created_at => @comments.created_at }
-          #format.json { render :show, status: :ok, location: @contributions }
       end
     end 
     

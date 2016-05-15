@@ -2,12 +2,27 @@ class RepliesController < ApplicationController
   before_action :set_reply, only: [:show, :edit, :update, :destroy]
 
   def upvote
-    @replies = Reply.find(params[:id])
+    
     if(current_user)
+      @replies = Reply.find(params[:id])
       @replies.liked_by current_user
       @replies.update(puntos: @replies.votes_for.size)
+      redirect_to "/contributions/#{@replies.contribution_id}"
+    else 
+      @replies = Reply.find(params[:id])
+      myId = decodeToken(params[:user_token])
+      @user =  User.find(myId)
+      if(@user.voted_for? @replies)
+         render :json => {:status => "403", :error => "El usuario ya ha votado este reply"}, status: :forbidden
+      else 
+        @replies.liked_by @user
+        @replies.update(puntos: @replies.votes_for.size)
+        
+          render :json => {status => "200", :id => params[:id], :content => @replies.content, 
+          :puntos => @replies.puntos ,:contribution_id => @replies.contribution_id , :user_id => @replies.user_id, :comment_id => @replies.comment_id,
+          :created_at => @replies.created_at }
     end
-    redirect_to "/contributions/#{@replies.contribution_id}"
+    
   end 
   
   def downvote

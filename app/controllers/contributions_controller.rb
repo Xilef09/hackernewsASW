@@ -21,8 +21,8 @@ class ContributionsController < ApplicationController
         
         respond_to do |format|
           render :json => {status => "200", :id => params[:id], :text => @contributions.text, 
-          :url => @contribucions.url , :titulo => @contribucions.titulo, :user_id => @contribucions.user_id, 
-          :created_at => @contribucions.created_at, :puntos => @contribucions.puntos }
+          :url => @contributions.url , :titulo => @contributions.titulo, :user_id => @contributions.user_id, 
+          :created_at => @contributions.created_at, :puntos => @contributions.puntos }
           #format.json { render :show, status: :ok, location: @contributions }
         end
       end

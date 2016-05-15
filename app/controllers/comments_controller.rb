@@ -20,6 +20,10 @@ class CommentsController < ApplicationController
   # GET /comments.json
   def index
     @comments = Comment.all
+    if params[:contribution_id] != nil
+      @commnets = Commnet.where(contribucion: params[:contribution_id]).order(created_at: :desc)
+    end
+      
   end
 
   # GET /comments/1

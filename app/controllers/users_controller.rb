@@ -96,7 +96,7 @@ class UsersController < ApplicationController
         end
       end
     else
-       render :json => {:status => "401", :error => "No estas autorizado a editar el perfil"}, status: :unauthorized
+       render :json => {:status => "401", :error => "No estas autorizado a editar el perfil"}, status: :forbidden
     end
   end
 

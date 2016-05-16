@@ -77,6 +77,8 @@ class UsersController < ApplicationController
           format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       end
+    else
+       render :json => {:status => "403", :error => "No estas autorizado a editar el perfil"}, status: :forbidden
     end
   end
 

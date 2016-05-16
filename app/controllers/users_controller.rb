@@ -26,7 +26,6 @@ class UsersController < ApplicationController
       render :json => @replies
     elsif params[:submission_type] != ""
       render :json => {:status => "400", :error => "No es un tipo valido"}, status: :forbidden
-    e
     else 
         render :json => @user
     end

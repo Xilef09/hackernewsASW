@@ -8,11 +8,13 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     #@contributions = Contributions.all
+    
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
+      
   end
 
   # GET /users/1/contributions

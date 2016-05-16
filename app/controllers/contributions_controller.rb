@@ -92,7 +92,14 @@ class ContributionsController < ApplicationController
       (params[:contribution][:url] == nil && params[:contribution][:text] == nil) 
         render :json => {:status => "400", :error => "Bad Request"}, status: :bad_request
       else
-        params[:contribution][:user_id] = decodeToken(params[:user_token])
+        miId = decodeToken(params[:user_token])
+        @miuser = User.find(miId)
+        
+        if @miuser == nil
+          render :json => {:status => "401", :error => "el usuario con este token no existe"}, status: :unauthorized
+        end
+        
+        params[:contribution][:user_id] = miId
         params[:contribution][:puntos] = 0;
         @contribution = Contribution.new(contribution_params)
         respond_to do |format|

@@ -12,7 +12,6 @@ class CommentsController < ApplicationController
       @comments = Comment.find(params[:id])
       myId = decodeToken(params[:user_token])
       @user =  User.find(myId)
-      
       if(@user.voted_for? @comments)
          render :json => {:status => "403", :error => "El usuario ya ha votado este comment"}, status: :forbidden
       else 

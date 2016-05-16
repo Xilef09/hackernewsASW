@@ -15,20 +15,21 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user  = User.find(params[:id])
-    respond_to do |format|
+    #respond_to do |format|
       if params[:submission_type] == "contributions"
         @contributions = Contribution.where(user_id: @user.id).order(created_at: :desc)
-        format.json { render :show, status: :ok, location: @contributions}
+        #format.json { render :show, status: :ok, location: @contributions}
       elsif params[:submission_type] == "comments"
         @comment = Comment.where(user_id: @user.id).order(created_at: :desc)
-        format.json {render :showcomments,  status: :ok, location: @user}
+        render:showcomments
+        #format.json {render :showcomments,  status: :ok, location: @user}
       elsif params[:submission_type] == "replies"
         @replies = Reply.where(user_id: @user.id).order(created_at: :desc)
-        format.json { render :show, status: :ok, location: @replies}
+        #format.json { render :show, status: :ok, location: @replies}
       else 
-        format.json { render :show, status: :created, location: @user }
+        #format.json { render :show, status: :created, location: @user }
       end
-    end
+    #end
     
   end
 

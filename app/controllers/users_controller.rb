@@ -31,6 +31,7 @@ class UsersController < ApplicationController
         #format.json { render :show, status: :ok, location: @replies}
     else 
         #format.json { render :show, status: :created, location: @user }
+        render :json => @user
     end
     #end 
   end

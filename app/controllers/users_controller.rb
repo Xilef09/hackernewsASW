@@ -17,12 +17,10 @@ class UsersController < ApplicationController
     @user  = User.find(params[:id])
     respond_to do |format|
       if params[:submission_type] == "contributions"
-        @contributions = Contribution.where(user_id: @user.id).order(created_at: :desc)
-        render 'showcontributions'
-        #format.json { render :show, status: :ok, location: @contributions}
+        @contributions = Contribution.where(user_id: @user.id).order(created_at: :desc)format.json { render :show, status: :ok, location: @contributions}
       elsif params[:submission_type] == "comments"
         @comments = Comment.where(user_id: @user.id).order(created_at: :desc)
-        format.json {render :show, status: :ok, location: @comments}
+        format.json {render @comments.show, status: :ok, location: @comments}
       elsif params[:submission_type] == "replies"
         @replies = Reply.where(user_id: @user.id).order(created_at: :desc)
         format.json { render :show, status: :ok, location: @replies}
@@ -30,6 +28,7 @@ class UsersController < ApplicationController
         format.json { render :show, status: :created, location: @user }
       end
     end
+    
   end
 
   # GET /users/1/contributions

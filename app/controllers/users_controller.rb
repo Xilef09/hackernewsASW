@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user  = User.find(params[:user_id])
+    @user  = User.find(params[:id])
     respond_to do |format|
       if params[:submission_type] == "contributions"
         @contributions = Contribution.where(user_id: params[:user_id]).order(created_at: :desc)

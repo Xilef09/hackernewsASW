@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     elsif params[:submission_type] == "replies"
       @replies = Reply.where(user_id: @user.id).order(created_at: :desc)
       render :json => @replies
-    elsif params[:submission_type] == ""
+    elsif params[:submission_type] == nil
       render :json => @user
     else 
 

@@ -66,8 +66,6 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    params[:user][:user_id] = decodeToken(params[:user_token])
-    #@user = User.find(decodeToken(params[:user_token]))
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }

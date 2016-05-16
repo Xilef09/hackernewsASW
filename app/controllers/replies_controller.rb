@@ -47,7 +47,7 @@ class RepliesController < ApplicationController
   # GET /replies/1
   # GET /replies/1.json
   def show
-    @repy = Reply.find(params[:id])
+    #@reply = Reply.find(params[:id])
   end
 
   # GET /replies/new

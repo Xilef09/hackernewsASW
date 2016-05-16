@@ -24,10 +24,11 @@ class UsersController < ApplicationController
     elsif params[:submission_type] == "replies"
       @replies = Reply.where(user_id: @user.id).order(created_at: :desc)
       render :json => @replies
-    elsif params[:submission_type] != ""
-      render :json => {:status => "400", :error => "No es un tipo valido"}, status: :forbidden
+    elsif params[:submission_type] == ""
+      render :json => @user
     else 
-        render :json => @user
+
+      render :json => {:status => "400", :error => "No es un tipo valido"}, status: :forbidden
     end
   end
 

@@ -79,14 +79,14 @@ class CommentsController < ApplicationController
         end
       end
     else
-      @contribution = Contribution.find(params[:contribution_id])
-      if @contribution == nil
-         render :json => {:status => "404", :error => "No existe esta contribution"}, status: :forbidden
+      miId = decodeToken(params[:user_token])
+      @user = User.find(miId)
+      if @user == nil
+        render :json => {:status => "401", :error => "Token no valido"}, status: :forbidden
       else
-        miId = decodeToken(params[:user_token])
-        @user = User.find(miId)
-        if @user == nil
-          render :json => {:status => "401", :error => "Token no valido"}, status: :forbidden
+        @contribution = Contribution.find(params[:contribution_id])
+        if @contribution == nil
+          render :json => {:status => "404", :error => "No existe esta contribution"}, status: :forbidden
         else
           params[:comment][:user_id] = miId
           params[:comment][:puntos] = 0;

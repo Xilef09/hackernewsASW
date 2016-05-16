@@ -25,7 +25,8 @@ class UsersController < ApplicationController
       @replies = Reply.where(user_id: @user.id).order(created_at: :desc)
       render :json => @replies
     elsif params[:submission_type] == nil
-      render :json => @user
+      #render :json => @user
+      render :show
     else 
 
       render :json => {:status => "400", :error => "No es un tipo valido"}, status: :forbidden

@@ -1,2 +1,3 @@
-json.extract! @comment, :id, :content, :puntos, :user_id , :contribution_id, :created_at, :updated_at, :replies
-json.hal comment_url(@comment)
+json.array!(@comments) do |comment|
+json.extract! comment, :id, :content, :puntos, :created_at, :user_id, :contribution_id
+json.hal comment_url(comment)

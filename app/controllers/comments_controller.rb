@@ -38,6 +38,10 @@ class CommentsController < ApplicationController
     if params[:contribution_id] == nil
       @comments = Comment.all
     else
+      @contribution = Contribucion.find(params[contribution_id])
+      if @contribution == nil
+         render :json => {:status => "404", :error => "No existe esta contribution"}, status: :forbidden
+      end
       @comments = Comment.where(contribution_id: params[:contribution_id] )
       
     end

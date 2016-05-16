@@ -74,8 +74,12 @@ class RepliesController < ApplicationController
         end
       end
     else
-      params[:reply][:user_id] = decodeToken(params[:user_token])
-      params[:reply][:puntos] = 0;
+      miId = decodeToken(params[:user_token])
+      @miuser = User.find(miId)
+      @micontribution = Comment.find(params[:comment_id])
+      
+      params[:reply][:user_id] = miId
+      params[:reply][:puntos] = 0
       @reply = Reply.new(reply_params)
       respond_to do |format|
         if @reply.save

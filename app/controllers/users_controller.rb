@@ -17,7 +17,8 @@ class UsersController < ApplicationController
     @user  = User.find(params[:id])
     respond_to do |format|
       if params[:submission_type] == "contributions"
-        @contributions = Contribution.where(user_id: @user.id).order(created_at: :desc)format.json { render :show, status: :ok, location: @contributions}
+        @contributions = Contribution.where(user_id: @user.id).order(created_at: :desc)
+        format.json { render :show, status: :ok, location: @contributions}
       elsif params[:submission_type] == "comments"
         @comments = Comment.where(user_id: @user.id).order(created_at: :desc)
         format.json {render @comments.show, status: :ok, location: @comments}

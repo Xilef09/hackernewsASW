@@ -15,25 +15,21 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user  = User.find(params[:id])
-    #respond_to do |format|
     if params[:submission_type] == "contributions"
      @contributions = Contribution.where(user_id: @user.id).order(created_at: :desc)
      render :json => @contributions
-      #  #format.json { render :show, status: :ok, location: @contributions}
     elsif params[:submission_type] == "comments"
       @comments = Comment.where(user_id: @user.id).order(created_at: :desc)
       render :json => @comments
-      
-        #format.json {render :showcomments,  status: :ok, location: @user}
     elsif params[:submission_type] == "replies"
       @replies = Reply.where(user_id: @user.id).order(created_at: :desc)
       render :json => @replies
-        #format.json { render :show, status: :ok, location: @replies}
+    elsif params[:submission_type] != ""
+      render :json => {:status => "400", :error => "No es un tipo valido"}, status: :forbidden
+    e
     else 
-        #format.json { render :show, status: :created, location: @user }
         render :json => @user
     end
-    #end 
   end
 
   # GET /users/1/contributions

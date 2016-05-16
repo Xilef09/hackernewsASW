@@ -14,22 +14,25 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    #@user  = User.find(params[:id])
+    @user  = User.find(params[:id])
     #respond_to do |format|
-    #  if params[:submission_type] == "contributions"
-     #   @contributions = Contribution.where(user_id: @user.id).order(created_at: :desc)
+    if params[:submission_type] == "contributions"
+     @contributions = Contribution.where(user_id: @user.id).order(created_at: :desc)
+     render :json => @contributions
       #  #format.json { render :show, status: :ok, location: @contributions}
-    #  elsif params[:submission_type] == "comments"
-     #   @comments = Comment.where(user_id: @user.id).order(created_at: :desc)
-    #    render 'showcomments.json'
+    elsif params[:submission_type] == "comments"
+      @comments = Comment.where(user_id: @user.id).order(created_at: :desc)
+      render :json => @comments
+      
         #format.json {render :showcomments,  status: :ok, location: @user}
-     # elsif params[:submission_type] == "replies"
-      #  @replies = Reply.where(user_id: @user.id).order(created_at: :desc)
+    elsif params[:submission_type] == "replies"
+      @replies = Reply.where(user_id: @user.id).order(created_at: :desc)
+      render :json => @replies
         #format.json { render :show, status: :ok, location: @replies}
-      #else 
+    else 
         #format.json { render :show, status: :created, location: @user }
-      #end
-    #end
+    end
+    #end 
   end
 
   # GET /users/1/contributions

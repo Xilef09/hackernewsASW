@@ -81,7 +81,7 @@ class CommentsController < ApplicationController
     else
       @contribution = Contribution.find(params[:contribution_id])
       if @contribution == nil
-         render :json => {:status => "404", :error => "No existe esta contribution"}, status: :
+         render :json => {:status => "404", :error => "No existe esta contribution"}, status: :forbidden
       else
         miId = decodeToken(params[:user_token])
         @user = User.find(miId)

@@ -38,7 +38,8 @@ class CommentsController < ApplicationController
     if params[:contribution_id] == nil
       @comments = Comment.all
     else
-      @contributions = Comment.where(contribution_id: params[:contribution_id] )
+      @comments = Comment.where(contribution_id: params[:contribution_id] )
+      
     end
       
   end

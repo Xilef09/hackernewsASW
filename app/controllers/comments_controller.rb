@@ -12,6 +12,7 @@ class CommentsController < ApplicationController
       @comments = Comment.find(params[:id])
       myId = decodeToken(params[:user_token])
       @user =  User.find(myId)
+      
       if(@user.voted_for? @comments)
          render :json => {:status => "403", :error => "El usuario ya ha votado este comment"}, status: :forbidden
       else 
@@ -40,7 +41,7 @@ class CommentsController < ApplicationController
     else
       @contribution = Contribution.find(params[:contribution_id])
       if @contribution == nil
-         render :json => {:status => "404", :error => "No existe esta contribution"}, status: :forbidden
+         render :json => {:status => "404", :error => "No existe esta contribution"}, status: :not_found
       else
         @comments = Comment.where(contribution_id: params[:contribution_id] )
       end
@@ -54,7 +55,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @replies = Reply.where(comment_id: params[:id])
     if not @comment.present?
-      render :json => {:status => "404", :error => "No existe este comment"}, status: :forbidden
+      render :json => {:status => "404", :error => "No existe este comment"}, status: :not_found
     end
   end
 
@@ -85,11 +86,11 @@ class CommentsController < ApplicationController
       miId = decodeToken(params[:user_token])
       @miuser = User.find(miId)
       if @miuser == nil
-        render :json => {:status => "401", :error => "Token no valido"}, status: :forbidden
+        render :json => {:status => "401", :error => "Token no valido"}, status: :unauthorized
       else
         @contribution = Contribution.find(params[:contribution_id])
         if @contribution == nil
-          render :json => {:status => "404", :error => "No existe esta contribution"}, status: :forbidden
+          render :json => {:status => "404", :error => "No existe esta contribution"}, status: :not_found
         else
           params[:comment][:user_id] = miId
           params[:comment][:puntos] = 0;

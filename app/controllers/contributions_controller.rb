@@ -89,6 +89,9 @@ class ContributionsController < ApplicationController
           end
         end
       else
+        if ( params[:text].present? && params[:url].present? )
+           render :json => {:status => "400", :error => "Bad Request"}, status: :bad_request
+        end
         params[:contribution][:user_id] = decodeToken(params[:user_token])
         params[:contribution][:puntos] = 0;
         @contribution = Contribution.new(contribution_params)

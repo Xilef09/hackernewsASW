@@ -59,15 +59,30 @@ class RepliesController < ApplicationController
   # POST /replies
   # POST /replies.json
   def create
-    @reply = Reply.new(reply_params)
-
-    respond_to do |format|
-      if @reply.save
-        format.html { redirect_to "/contributions/#{@reply.contribution_id}"}
-        format.json { render :show, status: :created, location: @reply }
-      else
-        format.html { render :new }
-        format.json { render json: @reply.errors, status: :unprocessable_entity }
+    if(current_user)
+      @reply = Reply.new(reply_params)
+  
+      respond_to do |format|
+        if @reply.save
+          format.html { redirect_to "/contributions/#{@reply.contribution_id}"}
+          format.json { render :show, status: :created, location: @reply }
+        else
+          format.html { render :new }
+          format.json { render json: @reply.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      params[:reply][:user_id] = decodeToken(params[:user_token])
+      params[:reply][:puntos] = 0;
+      @reply = Reply.new(reply_params)
+      respond_to do |format|
+        if @reply.save
+          format.html { redirect_to "/contributions/#{@reply.contribution_id}"}
+          format.json { render :show, status: :created, location: @reply }
+        else
+          format.html { render :new }
+          format.json { render json: @reply.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

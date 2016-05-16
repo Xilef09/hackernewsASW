@@ -53,6 +53,9 @@ class CommentsController < ApplicationController
   def show
     @comment = Comment.find(params[:id])
     @replies = Reply.where(comment_id: params[:id])
+    if @comment == nil 
+      render :json => {:status => "404", :error => "No existe este comment"}, status: :forbidden
+    end
   end
 
   # GET /comments/new

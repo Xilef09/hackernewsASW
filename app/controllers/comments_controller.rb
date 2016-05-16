@@ -82,18 +82,23 @@ class CommentsController < ApplicationController
       if @contribution == nil
          render :json => {:status => "404", :error => "No existe esta contribution"}, status: :forbidden
       else
-        params[:comment][:user_id] = decodeToken(params[:user_token])
-        params[:comment][:puntos] = 0;
-        @comment = Comment.new(comment_params)
-        respond_to do |format|
-          if @comment.save
-            format.html { redirect_to "/contributions/#{@comment.contribution_id}" }
-            format.json { render :show, status: :created, location: @comment }
-          else
-            format.html { render :new }
-            format.json { render json: @comment.errors, status: :unprocessable_entity }
-          end
-          
+        miId = decodeToken(params[:user_token])
+        @user = User.find(miId)
+        if @user == nil
+          render :json => {:status => "401", :error => "Token no valido"}, status: :forbidden
+        else
+          params[:comment][:user_id] = miId
+          params[:comment][:puntos] = 0;
+          @comment = Comment.new(comment_params)
+          respond_to do |format|
+            if @comment.save
+              format.html { redirect_to "/contributions/#{@comment.contribution_id}" }
+              format.json { render :show, status: :created, location: @comment }
+            else
+              format.html { render :new }
+              format.json { render json: @comment.errors, status: :unprocessable_entity }
+            end
+        end    
         end
       end
     end  

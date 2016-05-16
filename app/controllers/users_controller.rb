@@ -25,7 +25,7 @@ class UsersController < ApplicationController
         format.json {render :show, status: :ok, location: @comments}
       elsif params[:submission_type] == "replies"
         @replies = Reply.where(user_id: @user.id).order(created_at: :desc)
-        format.json { render :show, status: :ok location: @replies}
+        format.json { render :show, status: :ok, location: @replies}
       else 
         format.json { render :show, status: :created, location: @user }
       end

@@ -80,8 +80,8 @@ class CommentsController < ApplicationController
       end
     else
       miId = decodeToken(params[:user_token])
-      @user = User.find(miId.t_i)
-      if @user == nil
+      @miuser = User.find(miId)
+      if @miuser == nil
         render :json => {:status => "401", :error => "Token no valido"}, status: :forbidden
       else
         @contribution = Contribution.find(params[:contribution_id])

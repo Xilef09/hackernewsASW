@@ -29,7 +29,7 @@ class UsersController < ApplicationController
       render :show
     else 
 
-      render :json => {:status => "400", :error => "No es un tipo valido"}, status: :forbidden
+      render :json => {:status => "400", :error => "No es un tipo valido"}, status: :bad_request
     end
   end
 

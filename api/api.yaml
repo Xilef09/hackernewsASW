@@ -1,0 +1,639 @@
+swagger: '2.0'
+info:
+  title: API de Hacker News (ASW)
+  description: API para la web Hacker News trabajada en ASW
+  version: "1.0.0"
+host: hackernewsasw2016.herokuapp.com
+schemes:
+  - https
+basePath: /
+produces:
+  - application/json
+paths:
+  /users/{user_id}:
+    get:
+      tags:
+        - User
+      summary: Mostrar un usuario
+      description: |
+        Devuelve la información referente al usuario consultado.
+        Si el campo Submission_type está vacío, se muestra la información del perfil.
+        Si el campo Submission_type tiene el valor "contributions", se muestran las contribuciones hechas por el usuario seleccionado.
+        Si el campo Submission_type tiene el valor "comments", se muestran los comentarios hechos por el usuario seleccionado.
+        Si el campo Submission_type tiene el valor "replies", se muestran las respuestas hechas por el usuario seleccionado.
+      parameters:
+        - name: user_id
+          in: path
+          description: Id del usuario que quieres consultar.
+          required: true
+          type: string
+        - name: submission_type
+          in: query
+          description: Tipo de submission (contributions, comments o replies).
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Información del usuario.
+          schema:
+            $ref: '#/definitions/GetUser'
+        "404":
+          description: No se ha encontrado el usuario.
+          schema:
+            $ref: '#/definitions/Error'
+        "400":
+          description: Submission type inválido.
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Error inesperado!
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - User
+      summary: Editar el perfil de un usuario
+      description: |
+       Actualiza el perfil de un usuario con la nueva información. 
+       La respuesta muestra el username, email, la fecha de registro y el about del usuario editado.
+      parameters:
+        - name: user_id
+          in: path
+          description: Id del usuario que quieres editar.
+          required: true
+          type: integer
+          format: base64
+        - name: body
+          in: body
+          description: Información actualizada del perfil.
+          required: true
+          schema:
+            $ref: '#/definitions/EditUser'
+      responses:
+        "404":
+          description: No se ha encontrado al usuario.
+          schema:
+            $ref: '#/definitions/Error'
+        "401":
+          description: No estás autorizado a modificar este perfil.
+          schema:
+            $ref: '#/definitions/Error'
+        "200":
+          description: Actualiza la información del perfil del usuario.
+          schema:
+            $ref: '#/definitions/GetUser'
+        default:
+          description: Error inesperado!
+          schema:
+            $ref: '#/definitions/Error'
+
+  /comments:
+    get:
+      summary: Lista de comentarios
+      description: |
+        Devuelve la información de todos los comentarios o los comentarios de una contribución concreta.
+      parameters:
+        - name: contribution_id
+          in: query
+          description: Id de la contribución de la cual se quieren obtener los comentarios.
+          required: false
+          type: string
+      tags:
+        - Comment
+      responses:
+        200:
+          description: Lista de todos los comentarios o de los comentarios de una contribución concreta.
+          schema:
+            title: Comentarios
+            type: array
+            items:
+              $ref: '#/definitions/CommentGet'
+        "404":
+          description: No se ha encontrado la contribución especificada.
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Publicar un comentario nuevo
+      description: |
+        Crear un comentario nuevo dado una contribución.
+      parameters:
+        - schema: 
+            $ref: "#/definitions/CommentNew"
+          required: true
+          name: params
+          in: body
+      tags:
+        - Comment
+      responses:
+        '201':
+          description: "El comentario se ha creado correctamente."
+          schema:
+            $ref: "#/definitions/CommentGet"
+        "401":
+          description: No estás autorizado a comentar contribuciones.
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: No se ha encontrado la contribución especificada.
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Error inesperado!
+          schema:
+            $ref: '#/definitions/Error'
+            
+  /comments/{id}:
+    get:
+      summary: Mostrar un comentario
+      description: |
+        Devuelve la información de un comentario específico.
+        La respuesta devuelve el identificador, el contenido del comentario, los puntos obtenidos, el id del autor, el id de la contribución, y la fecha de creación.
+      parameters:
+        - name: id
+          in: path
+          description: Id del comentario a consultar.
+          required: true
+          type: string
+      tags:
+        - Comment
+      responses:
+        '200':
+          description: Información del comentario.
+          schema:
+            $ref: '#/definitions/CommentGet'
+        "404":
+          description: No se ha encontrado el comentario especificado.
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Error inesperado!
+          schema:
+            $ref: '#/definitions/Error'
+  /comments/{id}/like:
+    put:
+      summary: Puntuar un comentario
+      description: |
+        Puntuar un comentario determinado.
+        La respuesta devuelve el identificador, el contenido del comentario, los puntos obtenidos, el id del autor, el id de la contribución, y la fecha de creación.
+      parameters:
+        - name: id
+          in: path
+          description: Id del comentario a votar
+          required: true
+          type: string
+        - name: user_token
+          in: body
+          description: Id del usuario que está puntuando.
+          required: true
+          schema:
+            $ref: '#/definitions/PuntoUser'
+      tags:
+        - Comment
+      responses:
+        '200':
+          description: Información del comentario
+          schema:
+            $ref: '#/definitions/CommentGet'
+        "403":
+          description: El usuario ya ha votado este comentario.
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: El usuario o el id del comentario no existe.
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Error inesperado!
+          schema:
+            $ref: '#/definitions/Error'
+  
+  /contributions/:
+    get:
+      summary: Mostrar todas las contribuciones 
+      description: |
+        Devuelve todas las contribuciones.
+        La respuesta contiene el identificador, el contenido, los puntos obtenidos, la fecha de creación.
+        Si la contribución es una ask tendrá el campo URL = null y si la contribucion es un show, tendrá el campo text = null.
+      parameters:
+        - name: contribution_type
+          in: query
+          description: Tipo de contribución (ask o show).
+          required: false
+          type: string
+      tags:
+        - Contribution  
+      responses:
+        200:
+          description: Listado de contribuciones.
+          schema:
+            title: Contribuciones
+            type: array
+            items:
+              $ref: '#/definitions/ContributionGet'
+        400: 
+          description: Tipo de contribución inválido.
+          schema: 
+            $ref: '#/definitions/Error'
+        default:
+          description: Error inesperado!
+          schema:
+            $ref: '#/definitions/Error'
+    
+    post:
+      summary: Publicar una nueva contribución
+      description: |
+        Crea una contribución con la información proporcionada.
+        La contribucion será una ask si el campo URL está vacío y el campo texto está lleno.
+        Sin embargo, si se llena el campo URL pero no el campo texto, la contribución será un show.
+        Si los dos campos tienen contenido nos devolverá un error.
+      parameters:
+        - name: body
+          in: body
+          description: Información de la contribución
+          required: true
+          schema:
+            $ref: '#/definitions/ContributionNew'
+      tags:
+        - Contribution  
+      responses:
+        200:
+          description: Contribución creada.
+          schema:
+              $ref: '#/definitions/ContributionGet'
+        400:
+          description: Error porque ambos campos url y text tienen contenido o no tienen contenido.
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Error porque el token no es correcto
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+            description: Error inesperado!
+            schema:
+              $ref: '#/definitions/Error'
+              
+  /contributions/{contribution_id}:
+    get:
+      summary: Mostrar una contribución
+      description: |
+        Devuelve la información de una contribución.
+        La respuesta contiene el identificador, el contenido, los puntos obtenidos, el título, la fecha de creación, el identificador del autor y la url.
+      parameters:
+        - name: contribution_id
+          in: path
+          description: Identificador de la contribución que se quiere consultar.
+          required: true
+          type: string
+      tags:
+        - Contribution
+      responses:
+        '200':
+          description: Información de la contribución.
+          schema:
+            $ref: '#/definitions/ContributionGet'
+        '404':
+          description: Error porque no existe la contribución
+          schema:
+            $ref: '#/definitions/Error'    
+        default:
+          description: Error inesperado!
+          schema:
+            $ref: '#/definitions/Error'
+            
+  /contributions/{contribution_id}/like:
+    put:
+      summary: Votar una contribución
+      description: |
+        Vota una contribución determinada.
+        La respuesta devuelve la información referente a la contribución.
+      parameters:
+        - name: contribution_id
+          in: path
+          description: Identificador de la contribución a votar.
+          required: true
+          type: string
+        - name: user_token
+          in: body
+          description: Token del usuario que va a votar la contribución.
+          required: true
+          schema:
+            $ref: '#/definitions/PuntoUser'
+      tags:
+        - Contribution
+      responses:
+        '200':
+          description: Información de la contribución
+          schema:
+            $ref: '#/definitions/ContributionGet'
+        '404':
+          description: Error porque no existe la contribución o el token
+          schema:
+            $ref: '#/definitions/Error'       
+        '403':
+          description: El usuario ya ha votado esta contribución
+          schema:
+            $ref: '#/definitions/Error'    
+        default:
+          description: Error inesperado!
+          schema:
+            $ref: '#/definitions/Error'            
+  /replies:
+    get:
+      summary: Mostrar respuestas
+      description: |
+        Devuelve la información de todas las respuestas o las respuestas de un comentario concreto.
+      parameters:
+        - name: comment_id
+          in: query
+          description: Id del comentario el cual se quieren listar sus respuestas.
+          required: false
+          type: string
+      tags:
+        - Reply
+      responses:
+        200:
+          description: Lista de todas las respuestas o las respuestas de un comentario determinado.
+          schema:
+            title: Respuestas
+            type: array
+            items:
+              $ref: '#/definitions/ReplyGet'
+        '404':
+          description: No existe el comentario.
+          schema:
+            $ref: '#/definitions/Error'           
+        default:
+          description: Error inesperado!
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Publicar una nueva respuesta
+      description: "Crear una respuesta nueva a un comentario."
+      parameters:
+        - schema: 
+            $ref: "#/definitions/ReplyNew"
+          required: true
+          name: params
+          in: body
+      tags:
+        - Reply
+      responses:
+        '201':
+          description: "La respuesta se ha creado correctamente."
+          schema:
+            $ref: "#/definitions/ReplyGet"
+        '404':
+          description: No existe el comentario o el token.
+          schema:
+            $ref: '#/definitions/Error'      
+        default:
+          description: Error inesperado!
+          schema:
+            $ref: '#/definitions/Error'    
+  /replies/{id}:
+    get:
+      summary: Mostrar una respuesta
+      description: |
+        Devuelve la información de una respuesta determinada.
+        La información devuelta contiene el id, el contenido de la respuesta, los puntos obtenidos, el id del autor, el id del comentario y la fecha de creación.
+      parameters:
+        - name: id
+          in: path
+          description: Id de la respuesta a consultar.
+          required: true
+          type: string
+      tags:
+        - Reply
+      responses:
+        '200':
+          description: Información de la respuesta.
+          schema:
+            $ref: '#/definitions/ReplyGet'
+        '404':
+          description: No existe la reply.
+          schema:
+            $ref: '#/definitions/Error'       
+        default:
+          description: Error inesperado!
+          schema:
+            $ref: '#/definitions/Error'
+  /replies/{id}/like:
+    put:
+      summary: Puntuar una respuesta
+      description: |
+        Puntuar una respuesta determinada.
+        Devuelve la información de la respuesta como el identificado, el contenido de la respuesta, los puntos obtenidos, el id del autor, id del comentario y la fecha de creación.
+      parameters:
+        - name: id
+          in: path
+          description: Id de la respuesta a votar.
+          required: true
+          type: string
+        - name: user_token
+          in: body
+          description: Id del usuario que está puntuando.
+          required: true
+          schema:
+            $ref: '#/definitions/PuntoUser'
+      tags:
+        - Reply
+      responses:
+        '200':
+          description: Información de la respuesta.
+          schema:
+            $ref: '#/definitions/ReplyGet'
+        '404':
+          description: No existe el comentario o el token.
+          schema:
+            $ref: '#/definitions/Error'      
+        default:
+          description: Error inesperado!
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  GetUser:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: Identificador del usuario en la aplicación.
+      name:
+        type: string
+        description: Nombre del usuario, inicialmente es el que Twitter nos proporciona, pero se puede modificar.
+      email:
+        type: string
+        description: Email del usuario.
+      about:
+        type: string
+        description: Información adicional sobre el usuario.
+      created_at:
+        type: string
+        description: Fecha de registro del usuario.
+        
+  EditUser:
+    type: object
+    properties:
+      user_token:
+        type: string
+        description: Token del usuario para comprobar si quieres modificar tu propio perfil.
+      name:
+        type: string
+        description: Nombre del usuario, inicialmente es el que Twitter nos proporcion, pero se puede modificar.
+      email:
+        type: string
+        description: Email del usuario.
+      about:
+        type: string
+        description: Información adicional sobre el usuario.
+        
+  CommentGet:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: Identificador del comentario.
+      user_id:
+        type: integer
+        format: int64
+        description: Identificador del autor del comentario.
+      content:
+        type: string
+        description: Texto del comentario.  
+      puntos:
+        type: number
+        format: integer
+        description: Puntos que los usuarios le han aportado al comentario.
+      created_at:
+        type: string
+        description: Fecha de creación del comentario.
+      contribution_id:
+        type: integer
+        format: int64
+        description: Identificador de la contribución de la cual se ha hecho el comentario 
+
+  
+  CommentNew:
+    type: object
+    properties:
+      user_token:
+        type: string
+        description: Identificador del autor del comentario.
+      contribution_id:
+        type: integer
+        format: int64
+        description: Identificador de la contribución a la que pertenece el comentario.
+      content:
+        type: string
+        description: Contenido del comentario.
+
+        
+  PuntoUser:
+    type: object
+    properties:
+      user_token:
+        type: string
+        description: Identificador del usuario que va ha puntuado.
+        
+  
+  ContributionGet:
+    type: object
+    properties:
+        id:
+          type: number
+          format: integer
+          description: Identificador de la contribución.
+        text:
+          type: string
+          description: Contenido de la contribución si es un ask.
+        url:
+          type: string
+          description: Link de la contribución.
+        titulo:
+          type: string
+          description: Título de la contribución.
+        user_id:
+          type: string
+          description: Identificador del usuario que ha creado la contribución.
+        created_at:
+          type: string
+          description: Fecha de creación de la contribución.
+        puntos:
+          type: number
+          format: integer
+          description: Puntos que ha obtenido la contribución.
+     
+  ContributionNew:
+    type: object
+    properties:
+      user_token:
+        type: string
+        description: Id del usuario que crea la contribución.
+      titulo:
+        type: string
+        description: Título de la contribución.
+      text:
+        type: string
+        description: Contenido de la contribución.
+      url:
+        type: string
+        description: Link de la contribución.
+        
+  ReplyGet:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: Identificador de la respuesta.
+      content:
+        type: string
+        description: Texto de la respuesta.  
+      puntos:
+        type: number
+        format: integer
+        description: Puntos que los usuarios han dado a la respuesta.
+      user_id:
+        type: integer
+        format: int64
+        description: Identificador del usuario que ha hecho la respuesta.
+      comment_id:
+        type: integer
+        format: int64
+        description: Identificador del comentario del cual se ha hecho la respuesta.
+      contribution_id:
+        type: integer
+        format: int64
+        description: Identificador de la contribución referida por el comentario.
+      created_at:
+        type: string
+        description: Fecha de creación de la respuesta.
+            
+  ReplyNew:
+    type: object
+    properties:
+      user_token:
+        type: string
+        description: Identificador del usuario que ha hecho la respuesta.
+      comment_id:
+        type: integer
+        format: int64
+        description: Identificador del comentario del cual se ha hecho la respuesta.
+      content:
+        type: string
+        description: Texto de la respuesta.
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
